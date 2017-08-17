@@ -81,7 +81,21 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+                <table>
+                <tr><th>MCGS_Time</th><th>MCGS_TIME</th><th>serial</th><th>user_id</th><th>ERR_event</th><th>TestSite_ON</th><th>output</th></tr>
+                @foreach ($events as $e)
+                <tr>
+                <td>{{$e->created_at}}</td>
+                <td>{{$e->MCGS_TIMEMS}}</td>
+                <td>{{$e->serial}}</td>
+                <td>{{$e->user_id}}</td>
+                <td>{{$e->ERR_event}}</td>
+                <td>{{$e->TestSite_ON}}</td>
+                <td>{{$e->output}}</td>
 
+                </tr>
+                @endforeach
+                </table>
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
