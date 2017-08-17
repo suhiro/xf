@@ -15,4 +15,5 @@ Route::get('/', function () {
 
 	$events = DB::table('lot_events')->get();
     return view('welcome',compact('events'));
+    //test;
 });
