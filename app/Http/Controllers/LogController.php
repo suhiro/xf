@@ -12,4 +12,7 @@ class LogController extends Controller
     	
     	return view('logs.index');
     }
+    public function log(){
+    	return view('logs.log');
+    }
 }
