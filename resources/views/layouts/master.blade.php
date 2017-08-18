@@ -12,16 +12,24 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="production log" name="description"/>
 <meta content="Hiro" name="author"/>
-<!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
-
+	@include('layouts.assets')
 </head>
-<body>
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
+	@include('layouts.header')
+	<div class="clearfix"></div>
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+ @include('layouts.sidebar')
+
+
+
 
 	@yield('content')
 	
 	@include('layouts.footer')
+	
+</div>
 	
 </body>
 </html>
