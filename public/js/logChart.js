@@ -118,7 +118,7 @@ let c = oo.getContext('2d');
 oo.width=500;
 oo.height=50;
 c.fillStyle = "#0000ff";
-c.fillRect(20,0,60,50);
+c.fillRect(0,0,60,50);
 c.fillRect(140,0,80,50);
 //c.fillRect(250,0,205,50);
 c.fillRect(255,0,5,50);
