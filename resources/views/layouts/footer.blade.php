@@ -12,7 +12,9 @@
 <!--[if lt IE 9]>
 
 <![endif]-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+<script src="{{URL::asset('assets/global/plugins/jquery.min.js')}}"></script>
 
 <script src="{{URL::asset('assets/global/plugins/jquery-migrate.min.js')}}" ></script>
 <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->

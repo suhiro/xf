@@ -113,14 +113,64 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
 }
 
 
-let oo = document.getElementById('o2');
-let c = oo.getContext('2d');
-oo.width=500;
-oo.height=50;
-c.fillStyle = "#0000ff";
-c.fillRect(0,0,60,50);
-c.fillRect(140,0,80,50);
-//c.fillRect(250,0,205,50);
-c.fillRect(255,0,5,50);
+
+const data2 = [{start:"3600",end:"9600"},
+{start:"19600",end:"17200"},
+{start:"53600",end:"56000"}];
 
 
+
+
+o2('machine1',data2);
+o2('machine2',data2);
+function o2(e,data) {
+	let oo = document.createElement('canvas');
+	let c = oo.getContext('2d');
+	//oo.width=$(window).width();
+	oo.width = $("#"+e).width();
+	const separator = oo.width;
+	oo.height=oo.width*.1;
+
+c.rect(0,0,oo.width,oo.height/2);
+c.stroke();
+
+c.fillStyle = "#3897da"; // color of the time interval boxes
+
+for(i in data) {
+	const startTime = data[i].start * oo.width/86400;
+	const endTime = data[i].end * oo.width/86400;
+	const barWidth = endTime - startTime;
+	c.fillRect(startTime,0,barWidth,oo.height/2);
+}
+
+
+c.textAlign = "center";
+c.textBaseline = "top";
+c.fillStyle = "#000000";
+c.font = ".8em arial";
+	for ( i = 1; i < 24; i++){ // draw the | for time clicks 
+	drawLine(c,separator/24*i,oo.height/2,separator/24*i,oo.height/2*1.5);
+	c.fillText(i, separator/24 * i, oo.height/2*1.5);
+	}
+
+$(oo).appendTo("#"+e); // assignt the graphic to div element
+}
+
+
+
+
+
+
+var myVinyls =  {
+	"Classical music" : 10,
+	"Alternative rock": 14,
+	"Pop" : 2,
+	"Jazz" :12
+};
+
+let myCanvas2 = document.getElementById('c2');
+let ct = myCanvas2.getContext('2d');
+c2.width = 500;
+c2.height = 500;
+ct.fillStyle = '#ffffff';
+ct.fillRect(0,0,500,500);

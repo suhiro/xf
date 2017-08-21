@@ -9,6 +9,17 @@
 <link href="{{URL::asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="styleseet">
 <!-- END GLOBAL MANDATORY STYLES -->
 
+
+<link href="{{URL::asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet">
+<link href="{{URL::asset('assets/global/plugins/fullcalendar/fullcalendar.min.css')}}" rel="stylesheet">
+<link href="{{URL::asset('assets/global/plugins/jqvmap/jqvmap/jqvmap.css')}}" rel="stylesheet">
+<!-- END PAGE LEVEL PLUGIN STYLES -->
+
+<!-- BEGIN PAGE STYLES -->
+<link href="{{URL::asset('assets/admin/pages/css/tasks.css')}}" rel="stylesheet">
+<!-- END PAGE STYLES -->
+
+
 <!-- BEGIN THEME STYLES -->
 <link href="{{URL::asset('assets/global/css/components.css')}}" id="style_components" rel="stylesheet">
 <link href="{{URL::asset('assets/global/css/plugins.css')}}" rel="stylesheet" >
