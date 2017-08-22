@@ -1,16 +1,16 @@
-console.log('log chart js');
+// console.log('log chart js');
 
-var myCanvas = document.getElementById('myCanvas');
+// var myCanvas = document.getElementById('myCanvas');
 
-myCanvas.width = 400;
-myCanvas.height = 400;
+// myCanvas.width = 400;
+// myCanvas.height = 400;
 
-let ctx = myCanvas.getContext('2d');
-ctx.fillStyle= "#ff0000";
-let radius = myCanvas.height / 2;
-ctx.translate(radius, radius);
-radius = radius * 0.9;
-setInterval(drawClock,1000);
+// let ctx = myCanvas.getContext('2d');
+// ctx.fillStyle= "#ff0000";
+// let radius = myCanvas.height / 2;
+// ctx.translate(radius, radius);
+// radius = radius * 0.9;
+// setInterval(drawClock,1000);
 
 function drawClock(){
 	drawFace(ctx,radius);
@@ -114,10 +114,36 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
 
 
 
-const data2 = [{start:"3600",end:"9600"},
-{start:"19600",end:"17200"},
-{start:"53600",end:"56000"}];
 
+
+
+// var day = moment("2017-06-10");
+// console.log(day.format('YYYY-MM-DD: X'));
+// var start = moment('2017-06-10 21:07:34');
+// var end = moment('2017-06-10 21:08:13');
+// var startSec = start.format('X')- day.format("X");
+// var endSec = end.format('X') - day.format('X');
+// console.log('start second: '+startSec);
+// console.log('end second:'+endSec);
+
+const data2 = [{start:"2017-06-10 10:45:17",end:"2017-06-10 10:46:14"},
+{start:"2017-06-10 10:46:35",end:"2017-06-10 10:47:41"},
+
+{start:"2017-06-10 10:47:41",end: "2017-06-10 10:48:45"},
+{start:"2017-06-10 12:01:51",end: "2017-06-10 13:40:17"},
+];
+
+
+function toSecond(start,end){
+	const startTime = moment(start);
+	const endTime = moment(end);
+	const theDate = moment(startTime.format('YYYY-MM-DD'));
+	const startSec = startTime.format('X') - theDate.format('X');
+	const endSec = endTime.format('X')- theDate.format('X');
+	const oo = {"start" : startSec, "end" : endSec};
+	return oo;
+
+}
 
 
 
@@ -126,7 +152,6 @@ o2('machine2',data2);
 function o2(e,data) {
 	let oo = document.createElement('canvas');
 	let c = oo.getContext('2d');
-	//oo.width=$(window).width();
 	oo.width = $("#"+e).width();
 	const separator = oo.width;
 	oo.height=oo.width*.1;
@@ -137,8 +162,11 @@ c.stroke();
 c.fillStyle = "#3897da"; // color of the time interval boxes
 
 for(i in data) {
-	const startTime = data[i].start * oo.width/86400;
-	const endTime = data[i].end * oo.width/86400;
+
+	const log = toSecond(data[i].start,data[i].end); // convert datetime values to seconds
+
+	const startTime = log.start * oo.width/86400;
+	const endTime = log.end * oo.width/86400;
 	const barWidth = endTime - startTime;
 	c.fillRect(startTime,0,barWidth,oo.height/2);
 }
@@ -155,22 +183,3 @@ c.font = ".8em arial";
 
 $(oo).appendTo("#"+e); // assignt the graphic to div element
 }
-
-
-
-
-
-
-var myVinyls =  {
-	"Classical music" : 10,
-	"Alternative rock": 14,
-	"Pop" : 2,
-	"Jazz" :12
-};
-
-let myCanvas2 = document.getElementById('c2');
-let ct = myCanvas2.getContext('2d');
-c2.width = 500;
-c2.height = 500;
-ct.fillStyle = '#ffffff';
-ct.fillRect(0,0,500,500);
