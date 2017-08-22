@@ -27,6 +27,7 @@ class LogController extends Controller
 
     				$obj->serial = $currentSerial;
     				$obj->logs = array();
+    				
     			
     		} else {
     			$currentSerial = $log->serial;
