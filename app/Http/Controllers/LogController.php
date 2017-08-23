@@ -16,25 +16,35 @@ class LogController extends Controller
     public function log(){
 
 
-    	$logs = DB::table('work_log')->whereDate('timeStart','2017-07-07')->get();
+    	$logs = DB::table('work_log')->whereDate('timeStart','2017-07-09')->get();
 
     	$currentSerial = '';
+        $machineArray = array();
     
     	foreach($logs as $log){
-    		if($currentSerial == $log->serial){
+    		$obj = (object)"";
+            if($currentSerial != $log->serial){
+                 $currentSerial = $log->serial;
 
-    				$obj = new stdClass();
+           
+            $obj->serial = $log->serial;
+            $obj->logs = array();
 
-    				$obj->serial = $currentSerial;
-    				$obj->logs = array();
-    				
-    			
-    		} else {
-    			$currentSerial = $log->serial;
-    		}
+            foreach($logs as $innerLog){
+                if($currentSerial == $innerLog->serial){
+                     $logObj = (object)"";
+                     $logObj->startTime = $innerLog->timeStart;
+                     $logObj->endTime = $innerLog->timeEnd;
+                     array_push($obj->logs,$logObj);
+                }
+            }
+            array_push($machineArray,$obj);
+            } 
     	}
 
+        
 
-    	return view('logs.log',compact('logs'));
+
+    	return view('logs.log',compact('logs','machineArray'));
     }
 }

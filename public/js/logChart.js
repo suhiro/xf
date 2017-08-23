@@ -147,8 +147,6 @@ function toSecond(start,end){
 
 
 
-o2('machine1',data2);
-o2('machine2',data2);
 function o2(e,data) {
 	let oo = document.createElement('canvas');
 	let c = oo.getContext('2d');

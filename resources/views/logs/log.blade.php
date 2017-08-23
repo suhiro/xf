@@ -6,26 +6,7 @@
 <body>
 <h1>Logs</h1>
 
-<div id="machine1" class="machine-report">
-	<div class="machine-info">
-<h4 class="machine-id">Machine ID</h4>
-<ul class="kpi">
-<li>a</li>
-<li>b</li>
-<li>c</li>
-</ul>
-	</div>
-</div>
-<div id="machine2" class="machine-report">	
-<div class="machine-info">
-<h4 class="machine-id">Machine ID</h4>
-<ul class="kpi">
-<li>a</li>
-<li>b</li>
-<li>c</li>
-</ul>
-	</div>
-</div></div>
+
 
 
 
@@ -42,9 +23,32 @@
 <script src="js/dc.min.js"></script>
 
 
-@foreach($logs as $log)
-{{var_dump($log)}}
-@endforeach
+@foreach($machineArray as $m)
+<div id="machine{{$m->serial}}" class="machine-report">	
+<div class="machine-info">
+<h4 class="machine-id">{{$m->serial}}</h4>
+<ul class="kpi">
+<li>a</li>
+<li>b</li>
+<li>c</li>
+</ul>
+	</div>
+</div>
+</div>
+<script>
+var data = [
+	@foreach($m->logs as $l)
+ {start:"{{$l->startTime}}",end:"{{$l->endTime}}"},
+	@endforeach
+];
+o2('machine{{$m->serial}}',data);
+</script>
+
+	
+@endforeach 
+
+
+
 
 </body>
 </html>
