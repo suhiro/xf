@@ -15,8 +15,17 @@ class LogController extends Controller
     }
     public function log(){
 
+    	if(!empty(request())){
+    		$viewDate = request()->input('view_date');
+    		$logs = DB::table('work_log')->whereDate('timeStart',$viewDate)->get();
+    		//dd($viewDate);
+    	}
+    	
+    	else {
 
-    	$logs = DB::table('work_log')->whereDate('timeStart','2017-07-09')->get();
+    	$logs = DB::table('work_log')->whereDate('timeStart','2017-7-12')->get();
+
+    	}
 
     	$currentSerial = '';
         $machineArray = array();
