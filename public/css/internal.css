@@ -42,6 +42,6 @@ ul.kpi li {
     text-decoration: none;
     float:right;
     margin:0 0 0 15px;
-    width:50px;
+    width:auto;
     height:25px;
 }

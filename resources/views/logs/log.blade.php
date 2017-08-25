@@ -47,14 +47,16 @@
 <div class="row">
 <div id="machine{{$m->serial}}" class="machine-report col-md-6">	
 <div class="machine-info">
-<h4 class="machine-id">{{$m->serial}}</h4>
+<h4 class="machine-id">{{$m->serial}} - {{$m->model}}</h4>
 <ul class="kpi">
-<li>a</li>
-<li>b</li>
-<li>c</li>
+<li>Assists: {{$m->errors}}</li>
+<li>MUBA: {{$m->muba}}</li>
+<li>Output: {{$m->output}}</li>
 </ul>
 	</div>
 </div>
+
+
 </div>
 <script>
 var data = [
@@ -65,9 +67,9 @@ var data = [
 o2('machine{{$m->serial}}',data);
 </script>
 
-</body>
 @endforeach 
 
+</body>
 <script>
 $("#view_date").datetimepicker({
 	format:'YYYY-MM-DD',
