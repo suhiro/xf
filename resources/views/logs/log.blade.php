@@ -9,7 +9,7 @@
 <body>
 <h1>Logs</h1>
 <h2>{{public_path('log')}}</h2>
-
+<h2>{{url('log')}}</h2>
 
 
 
@@ -31,7 +31,7 @@
 
 <div class="row">
 <div class="col-md-3">
-<form method="post" action="/log" >
+<form method="post" action="{{url('log')}}" >
 {{csrf_field()}}
 
 <div class="form-group">
