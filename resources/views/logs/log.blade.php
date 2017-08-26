@@ -30,7 +30,7 @@
 
 <div class="row">
 <div class="col-md-3">
-<form method="post" action="public/log" >
+<form method="post" action="/log" >
 {{csrf_field()}}
 
 <div class="form-group">
