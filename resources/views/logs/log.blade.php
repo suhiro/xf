@@ -8,6 +8,7 @@
 
 <body>
 <h1>Logs</h1>
+<h2>{{public_path('log')}}</h2>
 
 
 
