@@ -46,7 +46,9 @@
 <h4 class="machine-id">{{$m->serial}} - {{$m->model}}</h4>
 <ul class="kpi">
 <li>Assists: {{$m->errors}}</li>
+<li>E.A: {{$m->assists}}</li>
 <li>MUBA: {{$m->muba}}</li>
+<li>Interval: {{$m->interval}}</li>
 <li>Output: {{$m->output}}</li>
 </ul>
 	</div>

@@ -36,7 +36,10 @@ class LogController extends Controller
                 $obj->output = $this->getDailyOutputByMachine($viewDate,$log->serial);
                 $obj->model = $this->getModel($log->serial);
                 $obj->errors = $this->getTotalErrors($viewDate,$log->serial);
-                $obj->muba = $this->getMUBA($viewDate,$log->serial,$interval);
+                $muba = $this->getMUBA3($viewDate,$log->serial,$interval);
+                $obj->muba = $muba->muba;
+                $obj->assists = $muba->assists; 
+                $obj->interval = $interval;
             // get all the work logs for the current machine
             $obj->logs = array();
             foreach($logs as $innerLog){
@@ -65,21 +68,100 @@ class LogController extends Controller
     }
 
     private function getTotalErrors($date,$serial){
+        return DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+                    where('serial',$serial)->whereDate('lot_events.created_at',$date)->count();
+    }
+    private function getMUBA2($date,$serial,$interval){
+         $dayOutput = $this->getDailyOutputByMachine($date,$serial);
+         $loops = ceil($dayOutput / $interval);
+         $firstRow = DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+                    where('serial',$serial)->whereDate('lot_events.created_at',$date)->first();
 
-        $model = $this->getModel($serial);
-        $model_errors = $this->getAllErrors($model);
-
-        $allEvents = DB::table('lot_events')->where('serial',$serial)->whereDate('created_at',$date)->get();
         $totalErrors = 0;
-        foreach($allEvents as $e){
-                  
-                       foreach($model_errors as $error){
-                            if($error->err_code == $e->ERR_event){
-                                 $totalErrors += 1;
-                            }
-                        }
+        $startMark = $firstRow->output;
+        $endMark = $firstRow->output;
+
+         for ($i = 0; $i < $loops; $i++){
+            $endMark += $interval;  
+            $partials = DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+                    where('serial',$serial)->
+                    whereDate('lot_events.created_at',$date)->
+                    where('output','<=',$endMark)->
+                    where('output','>=',$startMark)->get();
+            
+
+            $assistArray = array(); 
+            foreach($partials as $p){    
+                 array_push($assistArray,$p->ERR_event); 
+            }
+            $assistArray = array_unique($assistArray); 
+            $totalErrors += sizeof($assistArray); 
+
+            $startMark += $interval;     
+
+        }
+          $result = (object)"";
+        $result->muba = round($dayOutput/$totalErrors,2);
+        $result->assists =  $totalErrors;
+       return $result;
+
+    }
+    private function getMUBA3($date,$serial,$interval){
+         $dayOutput = $this->getDailyOutputByMachine($date,$serial);
+          $firstRow = DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+                    where('serial',$serial)->
+                    whereDate('lot_events.created_at',$date)->first();
+        
+         $assists = DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+                    select('ERR_event','output')->
+                    where('serial',$serial)->
+                    whereDate('lot_events.created_at',$date)->get();
+          $totalErrors = 1;
+          $debugArray = array();
+         for($i = 0; $i < sizeof($assists)-1;$i++){
+            if($assists[$i+1]->output - $assists[$i]->output <= $interval){
+                $assistArray = array();
+                $assisArray[$i] = $assists[$i]->ERR_event;
+                //array_push($debugArray,$assistArray);
+
+                for($j = $i+2;  $j < sizeof($assists); $j++){
+
+                    if($assists[$j]->output - $assists[$i]->output <= $interval){
+                     
+                         $assisArray[$j] = $assists[$j]->ERR_event;
+                       //  array_push($assistArray,$assists[$j]->ERR_event); 
+
+                    } else {
+                            break;
                     }
-        return $totalErrors;
+                    
+                    
+
+                }
+                //dd($assistArray);
+                array_push($debugArray,$assistArray);
+                $totalErrors +=  sizeof(array_unique($assistArray));
+
+            } else {
+                $totalErrors += 1;
+            }
+
+        
+         }
+         dd($debugArray);
+        $result = (object)"";
+        $result->muba = round($dayOutput/$totalErrors,2);
+        $result->assists =  $totalErrors;
+       return $result;
+
+    }
+
+    private function withinInterval($output1,$output2,$interval){
+        if (($output2 - $output1) <= $interval) {
+
+        } else {
+            return false;
+        }
     }
 
     private function getMUBA($date,$serial,$interval){
@@ -92,7 +174,7 @@ class LogController extends Controller
 
         $firstRow = DB::table('lot_events')->where('serial',$serial)->whereDate('created_at',$date)->first();
 
-        $totalErrors = 0;
+        $totalErrors = 0; // method 2
         $startMark = $firstRow->output;
         $endMark = $firstRow->output;
 
