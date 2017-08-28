@@ -82,7 +82,7 @@ class LogController extends Controller
     }
 
     private function getMUBA($date,$serial){
-        $interval = 1000;
+        $interval = 100;
         $model = $this->getModel($serial);
         $model_errors = $this->getAllErrors($model);
         $dayOutput = $this->getDailyOutputByMachine($date,$serial);
