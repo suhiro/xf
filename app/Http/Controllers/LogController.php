@@ -17,6 +17,7 @@ class LogController extends Controller
 
     	if(!empty(request())){
     		$viewDate = request()->input('view_date');
+            $interval = request()->input('interval');
     		$logs = DB::table('work_log')->whereDate('timeStart',$viewDate)->get();
     	}
     	else {
@@ -35,7 +36,7 @@ class LogController extends Controller
                 $obj->output = $this->getDailyOutputByMachine($viewDate,$log->serial);
                 $obj->model = $this->getModel($log->serial);
                 $obj->errors = $this->getTotalErrors($viewDate,$log->serial);
-                $obj->muba = $this->getMUBA($viewDate,$log->serial);
+                $obj->muba = $this->getMUBA($viewDate,$log->serial,$interval);
             // get all the work logs for the current machine
             $obj->logs = array();
             foreach($logs as $innerLog){
@@ -81,8 +82,8 @@ class LogController extends Controller
         return $totalErrors;
     }
 
-    private function getMUBA($date,$serial){
-        $interval = 100;
+    private function getMUBA($date,$serial,$interval){
+        
         $model = $this->getModel($serial);
         $model_errors = $this->getAllErrors($model);
         $dayOutput = $this->getDailyOutputByMachine($date,$serial);
@@ -95,75 +96,58 @@ class LogController extends Controller
         $startMark = $firstRow->output;
         $endMark = $firstRow->output;
 
-        //$partials;
 
-        $debugArray=array();
+       // $debugArray=array(); // method  1
 
         for ($i = 0; $i < $loops; $i++){
             $endMark += $interval;  
             $partials = DB::table('lot_events')->where('serial',$serial)->whereDate('created_at',$date)
                   ->where('output','<=',$endMark)->where('output','>=',$startMark)->get();
 
-          	
-
-          	//$loopArray = array();
-			$errorArray = array();
+		//  $errorArray = array(); // method  1
+          $assistArray = array(); // method  2
            foreach($partials as $p){
 
             foreach($model_errors as $e){
                 if($e->err_code == $p->ERR_event){
 
-                   $errorArray[$e->err_code] = true;
+                   // $errorArray[$e->err_code] = true; // method  1
 
-                  // array_push($debugArray,$errorArray);
+                    array_push($assistArray,$p->ERR_event); // method  2
 
-
-                	//array_push($errorArray,$p->ERR_event);
-                    //$totalErrors += 1;
                 }
-            }
-                 $totalErrors += sizeof($errorArray);
-
-                 // array_push($loopArray,$errorArray);
-                 	
+            }    
 
 
            }
-           array_push($debugArray,$errorArray);
-          // 	array_push($debugArray,$loopArray);
+           //  array_push($debugArray,$errorArray); // method 1
 
-           $startMark += $interval; 
+            $assistArray = array_unique($assistArray); // method  2
+            $totalErrors += sizeof($assistArray); // method  2
+
+            $startMark += $interval; 
 
         } 
                
 
-        //foreach($allEvents as $e){
-        // for($i = 0; $i < sizeof($allEvents);$i++){
-            
-        //        //$firstOut = $allEvents[$i]->output;
-        //        $endMark = $firstOutput + $interval;   
-        //                foreach($model_errors as $error){
-        //                     if($error->err_code == $allEvents[$i]->ERR_event){
-        //                          $totalErrors += 1;
-        //                     }
-        //                 }
-        //             }
-
-        //return $dayOutput;
-        //return $totalErrors;
-       	//dd(sizeof($debugArray));
-        $sizeOfTrue =0;
-        foreach($debugArray as $d){
-        	foreach($d as $k => $v){
-        		if($v){
-        			$sizeOfTrue +=1;
-        		}
-        	}
-        }
-
+        //$sizeOfTrue = $this->getSize($debugArray); // method 1
+        //dd($totalErrors);
         //dd($sizeOfTrue);
-        
-        return round($dayOutput/$sizeOfTrue,2);
+
+       return round($dayOutput/$totalErrors,2); // method 2
+      // return round($dayOutput/$sizeOfTrue,2); //method 1
+    }
+
+    private function getSize($Arr){
+         $sizeOfTrue =0;
+        foreach($Arr as $d){
+            foreach($d as $k => $v){
+                if($v){
+                    $sizeOfTrue +=1;
+                }
+            }
+        }
+        return $sizeOfTrue;
     }
 
 

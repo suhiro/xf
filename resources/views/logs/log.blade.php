@@ -8,8 +8,6 @@
 
 <body>
 <h1>Logs</h1>
-<h2>{{public_path('log')}}</h2>
-<h2>{{url('log')}}</h2>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -30,6 +28,10 @@
 <div class="form-group">
 <label for="view_date">View Date: </label>
 <input type="text" class="form-control" id="view_date" name="view_date">
+</div>
+<div class="form-group">
+<label for="interval">Interval: </label>
+<input type="number" step="100" min="100" max="10000" class="form-control"  name="interval" value="100">
 </div>
 <button type="submit" class="btn btn-primary">Choose</button>
 </form>
