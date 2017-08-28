@@ -95,32 +95,47 @@ class LogController extends Controller
         $startMark = $firstRow->output;
         $endMark = $firstRow->output;
 
-        $partials;
+        //$partials;
 
+        $debugArray=array();
 
         for ($i = 0; $i < $loops; $i++){
             $endMark += $interval;  
             $partials = DB::table('lot_events')->where('serial',$serial)->whereDate('created_at',$date)
-                  ->where('output','<=',$endMark)->where('output','>',$startMark)->get();
+                  ->where('output','<=',$endMark)->where('output','>=',$startMark)->get();
 
+          	
+
+          	//$loopArray = array();
+			$errorArray = array();
            foreach($partials as $p){
-
-                $errorArray = array();
 
             foreach($model_errors as $e){
                 if($e->err_code == $p->ERR_event){
 
-                    $errorArray[$e->err_code] = true;
+                   $errorArray[$e->err_code] = true;
+
+                  // array_push($debugArray,$errorArray);
+
+
+                	//array_push($errorArray,$p->ERR_event);
                     //$totalErrors += 1;
                 }
             }
                  $totalErrors += sizeof($errorArray);
 
+                 // array_push($loopArray,$errorArray);
+                 	
+
+
            }
+           array_push($debugArray,$errorArray);
+          // 	array_push($debugArray,$loopArray);
 
            $startMark += $interval; 
 
-        }          
+        } 
+               
 
         //foreach($allEvents as $e){
         // for($i = 0; $i < sizeof($allEvents);$i++){
@@ -134,8 +149,21 @@ class LogController extends Controller
         //                 }
         //             }
 
-       // return $firstOutput;
-        return round($dayOutput/$totalErrors,2);
+        //return $dayOutput;
+        //return $totalErrors;
+       	//dd(sizeof($debugArray));
+        $sizeOfTrue =0;
+        foreach($debugArray as $d){
+        	foreach($d as $k => $v){
+        		if($v){
+        			$sizeOfTrue +=1;
+        		}
+        	}
+        }
+
+        //dd($sizeOfTrue);
+        
+        return round($dayOutput/$sizeOfTrue,2);
     }
 
 
