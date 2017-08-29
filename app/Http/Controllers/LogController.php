@@ -15,6 +15,8 @@ class LogController extends Controller
     }
     public function log(){
 
+        $bike = new Motorcycle('Honda','CBR','1000','Red');
+
     	if(!empty(request())){
     		$viewDate = request()->input('view_date');
             $interval = request()->input('interval');
@@ -40,6 +42,7 @@ class LogController extends Controller
                 $obj->muba = $muba->muba;
                 $obj->assists = $muba->assists; 
                 $obj->interval = $interval;
+
             // get all the work logs for the current machine
             $obj->logs = array();
             foreach($logs as $innerLog){
@@ -57,7 +60,7 @@ class LogController extends Controller
             } 
     	}
 
-    	return view('logs.log',compact('logs','machineArray'));
+    	return view('logs.log',compact('logs','machineArray','bike'));
     }
     private function getModel($serial){
         return DB::table('machines')->where('serial',$serial)->value('model');
@@ -231,6 +234,25 @@ class LogController extends Controller
                         ->whereDate('created_at',$date)
                         ->value('output');
         return $output;
+    }
+
+}
+
+
+class Motorcycle {
+    protected $brand;
+    protected $cc;
+    public $color;
+    protected $model;
+    public function __construct($brand,$model,$cc,$color){
+        $this->brand = $brand;
+        $this->model =$model;
+        $this->cc = $cc;
+        $this->color = $color; 
+    }
+
+    public function brand(){
+        return $this->brand;
     }
 
 }
