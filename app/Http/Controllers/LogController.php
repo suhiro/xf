@@ -116,40 +116,58 @@ class LogController extends Controller
                     select('ERR_event','output')->
                     where('serial',$serial)->
                     whereDate('lot_events.created_at',$date)->get();
-          $totalErrors = 1;
+          $totalErrors = 0;
           $debugArray = array();
-         for($i = 0; $i < sizeof($assists)-1;$i++){
-            if($assists[$i+1]->output - $assists[$i]->output <= $interval){
-                $assistArray = array();
-                $assisArray[$i] = $assists[$i]->ERR_event;
-                //array_push($debugArray,$assistArray);
+         // for($i = 0; $i < sizeof($assists)-1;$i++){
+         //    if($assists[$i+1]->output - $assists[$i]->output <= $interval){
+         //        $assistArray = array();
+         //        //$assisArray[$i] = $assists[$i]->ERR_event;
+         //        //array_push($debugArray,$assistArray);
 
-                for($j = $i+2;  $j < sizeof($assists); $j++){
+         //        for($j = $i+1;  $j < sizeof($assists); $j++){
 
-                    if($assists[$j]->output - $assists[$i]->output <= $interval){
+         //            if($assists[$j]->output - $assists[$i]->output <= $interval){
                      
-                         $assisArray[$j] = $assists[$j]->ERR_event;
-                       //  array_push($assistArray,$assists[$j]->ERR_event); 
+         //                 //$assisArray[$j] = $assists[$j]->ERR_event;
+         //                 array_push($assistArray,$assists[$j]->ERR_event); 
 
-                    } else {
-                            break;
-                    }
+         //            } else {
+         //                    break;
+         //            }
                     
                     
 
-                }
-                //dd($assistArray);
-                array_push($debugArray,$assistArray);
-                $totalErrors +=  sizeof(array_unique($assistArray));
+         //        }
+         //        //dd($assistArray);
+         //        array_push($debugArray,$assistArray);
+         //        $totalErrors +=  sizeof(array_unique($assistArray));
 
+         //    } else {
+         //        $totalErrors += 1;
+         //    }
+         // }
+          $startMark = $firstRow->output;
+          $endMark = $firstRow->output + $interval;
+          $errorArray = array();
+          foreach($assists as $a){
+            if($a->output >= $startMark && $a->output < $endMark){
+                array_push($errorArray, $a->ERR_event);
             } else {
-                $totalErrors += 1;
-            }
+                $startMark = $a->output;
+                $endMark = $startMark + $interval;
 
-        
-         }
-         dd($debugArray);
-        $result = (object)"";
+                array_push($debugArray,$errorArray);
+                $totalErrors += sizeof(array_unique($errorArray));
+                $errorArray = array();
+                array_push($errorArray, $a->ERR_event);
+
+
+            }
+          }
+
+
+        // dd($debugArray);
+        $result = (object)'';
         $result->muba = round($dayOutput/$totalErrors,2);
         $result->assists =  $totalErrors;
        return $result;
