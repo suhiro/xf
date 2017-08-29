@@ -118,34 +118,7 @@ class LogController extends Controller
                     whereDate('lot_events.created_at',$date)->get();
           $totalErrors = 0;
           $debugArray = array();
-         // for($i = 0; $i < sizeof($assists)-1;$i++){
-         //    if($assists[$i+1]->output - $assists[$i]->output <= $interval){
-         //        $assistArray = array();
-         //        //$assisArray[$i] = $assists[$i]->ERR_event;
-         //        //array_push($debugArray,$assistArray);
-
-         //        for($j = $i+1;  $j < sizeof($assists); $j++){
-
-         //            if($assists[$j]->output - $assists[$i]->output <= $interval){
-                     
-         //                 //$assisArray[$j] = $assists[$j]->ERR_event;
-         //                 array_push($assistArray,$assists[$j]->ERR_event); 
-
-         //            } else {
-         //                    break;
-         //            }
-                    
-                    
-
-         //        }
-         //        //dd($assistArray);
-         //        array_push($debugArray,$assistArray);
-         //        $totalErrors +=  sizeof(array_unique($assistArray));
-
-         //    } else {
-         //        $totalErrors += 1;
-         //    }
-         // }
+   
           $startMark = $firstRow->output;
           $endMark = $firstRow->output + $interval;
           $errorArray = array();
