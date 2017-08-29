@@ -31,7 +31,7 @@
 </div>
 <div class="form-group">
 <label for="interval">Interval: </label>
-<input type="number" step="1" min="1" max="10000" class="form-control"  name="interval" value="100">
+<input type="number" step="100" min="100" max="10000" class="form-control"  name="interval" value="100">
 </div>
 <button type="submit" class="btn btn-primary">Choose</button>
 </form>
