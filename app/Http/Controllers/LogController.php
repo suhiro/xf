@@ -139,7 +139,6 @@ class LogController extends Controller
           }
 
 
-        // dd($debugArray);
         $result = (object)'';
         $result->muba = round($dayOutput/$totalErrors,2);
         $result->assists =  $totalErrors;
