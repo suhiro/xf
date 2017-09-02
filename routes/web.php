@@ -11,3 +11,5 @@ Route::get('/upload','uploadController@index');
 Route::get('/upload/{id}',function($id){
 	return Machines::find($id);
 });
+
+Route::post('/doUpload','uploadController@doUpload');
