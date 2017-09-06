@@ -13,3 +13,9 @@ Route::get('/upload/{id}',function($id){
 });
 
 Route::post('/doUpload','uploadController@doUpload');
+
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
