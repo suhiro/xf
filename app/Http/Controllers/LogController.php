@@ -20,10 +20,10 @@ class LogController extends Controller
     	if(!empty(request())){
     		$viewDate = request()->input('view_date');
             $interval = request()->input('interval');
-    		$logs = DB::table('work_log')->whereDate('timeStart',$viewDate)->get();
+    		$logs = DB::table('work_logs')->whereDate('timeStart',$viewDate)->get();
     	}
     	else {
-    	$logs = DB::table('work_log')->whereDate('timeStart','2017-7-12')->get();
+    	$logs = DB::table('work_logs')->whereDate('timeStart','2017-7-12')->get();
     	}
 
     	$currentSerial = '';
@@ -71,13 +71,13 @@ class LogController extends Controller
     }
 
     private function getTotalErrors($date,$serial){
-        return DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+        return DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
                     where('serial',$serial)->whereDate('lot_events.created_at',$date)->count();
     }
     private function getMUBA2($date,$serial,$interval){
          $dayOutput = $this->getDailyOutputByMachine($date,$serial);
          $loops = ceil($dayOutput / $interval);
-         $firstRow = DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+         $firstRow = DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
                     where('serial',$serial)->whereDate('lot_events.created_at',$date)->first();
 
         $totalErrors = 0;
@@ -86,7 +86,7 @@ class LogController extends Controller
 
          for ($i = 0; $i < $loops; $i++){
             $endMark += $interval;  
-            $partials = DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+            $partials = DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
                     where('serial',$serial)->
                     whereDate('lot_events.created_at',$date)->
                     where('output','<=',$endMark)->
@@ -111,11 +111,11 @@ class LogController extends Controller
     }
     private function getMUBA3($date,$serial,$interval){
          $dayOutput = $this->getDailyOutputByMachine($date,$serial);
-          $firstRow = DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+          $firstRow = DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
                     where('serial',$serial)->
                     whereDate('lot_events.created_at',$date)->first();
         
-         $assists = DB::table('lot_events')->join('erros','lot_events.ERR_event','erros.err_code')->
+         $assists = DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
                     select('ERR_event','output')->
                     where('serial',$serial)->
                     whereDate('lot_events.created_at',$date)->get();

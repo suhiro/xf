@@ -13,7 +13,7 @@ class CreateWorkLogTalbe extends Migration
      */
     public function up()
     {
-        Schema::create('work_log', function (Blueprint $table) {
+        Schema::create('work_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial');
             $table->string('customer');
@@ -33,6 +33,6 @@ class CreateWorkLogTalbe extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('work_log');
+        Schema::dropIfExists('work_logs');
     }
 }

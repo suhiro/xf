@@ -28,6 +28,6 @@ class CreateErrorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('erros');
+        Schema::dropIfExists('errors');
     }
 }
