@@ -14,9 +14,9 @@ class LogController extends Controller
     }
     public function log(){
 
-        $this->validate(request(),[
-            'view_date' => 'required',
-            ]);
+        // $this->validate(request(),[
+        //     'view_date' => 'required',
+        //     ]);
 
     		$viewDate = request('view_date');
             $interval = request('interval');
