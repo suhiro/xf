@@ -13,16 +13,15 @@ class CreateLotTable extends Migration
      */
     public function up()
     {
-        Schema::create('lot_events', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps('MCGS_Time');
+        Schema::create('event_logs', function (Blueprint $table) {
+            $table->dateTime('MCGS_Time');
             $table->integer('MCGS_TIMEMS');
-            $table->string('serial');
-            $table->string('user_id');
-            $table->string('ERR_event');
-            $table->string('TestSite_ON');
+            $table->string('serial',16);
+            $table->string('user_id',16);
+            $table->string('ERR_event',32);
+            $table->string('TestSite_ON',16);
             $table->integer('output');
-            
+            $table->primary(['MCGS_Time','MCGS_TIMEMS','serial','ERR_event']);
         });
     }
 
@@ -33,6 +32,6 @@ class CreateLotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lot_events');
+        Schema::dropIfExists('event_logs');
     }
 }

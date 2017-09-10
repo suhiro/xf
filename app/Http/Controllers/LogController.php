@@ -5,26 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+use App\Work_log;
 
 class LogController extends Controller
 {
     public function index(){
-
-    	
     	return view('logs.index');
     }
     public function log(){
 
-        $bike = new Motorcycle('Honda','CBR','1000','Red');
+        $this->validate(request(),[
+            'view_date' => 'required',
+            ]);
 
-    	if(!empty(request())){
-    		$viewDate = request()->input('view_date');
-            $interval = request()->input('interval');
-    		$logs = DB::table('work_logs')->whereDate('timeStart',$viewDate)->get();
-    	}
-    	else {
-    	$logs = DB::table('work_logs')->whereDate('timeStart','2017-7-12')->get();
-    	}
+    		$viewDate = request('view_date');
+            $interval = request('interval');
+    		$logs = Work_log::whereDate('timeStart',$viewDate)->get();
+    
 
     	$currentSerial = '';
         $machineArray = array();
@@ -54,13 +51,12 @@ class LogController extends Controller
                      array_push($obj->logs,$logObj);
                 }
             }
-           
 
             array_push($machineArray,$obj);
             } 
     	}
 
-    	return view('logs.log',compact('logs','machineArray','bike'));
+    	return view('logs.log',compact('logs','machineArray'));
     }
     private function getModel($serial){
         return DB::table('machines')->where('serial',$serial)->value('model');
@@ -71,14 +67,14 @@ class LogController extends Controller
     }
 
     private function getTotalErrors($date,$serial){
-        return DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
-                    where('serial',$serial)->whereDate('lot_events.created_at',$date)->count();
+        return DB::table('event_logs')->join('errors','event_logs.ERR_event','errors.err_code')->
+                    where('serial',$serial)->whereDate('event_logs.MCGS_Time',$date)->count();
     }
     private function getMUBA2($date,$serial,$interval){
          $dayOutput = $this->getDailyOutputByMachine($date,$serial);
          $loops = ceil($dayOutput / $interval);
-         $firstRow = DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
-                    where('serial',$serial)->whereDate('lot_events.created_at',$date)->first();
+         $firstRow = DB::table('event_logs')->join('errors','event_logs.ERR_event','errors.err_code')->
+                    where('serial',$serial)->whereDate('event_logs.MCGS_Time',$date)->first();
 
         $totalErrors = 0;
         $startMark = $firstRow->output;
@@ -86,9 +82,9 @@ class LogController extends Controller
 
          for ($i = 0; $i < $loops; $i++){
             $endMark += $interval;  
-            $partials = DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
+            $partials = DB::table('event_logs')->join('errors','event_logs.ERR_event','errors.err_code')->
                     where('serial',$serial)->
-                    whereDate('lot_events.created_at',$date)->
+                    whereDate('event_logs.MCGS_Time',$date)->
                     where('output','<=',$endMark)->
                     where('output','>=',$startMark)->get();
             
@@ -111,14 +107,14 @@ class LogController extends Controller
     }
     private function getMUBA3($date,$serial,$interval){
          $dayOutput = $this->getDailyOutputByMachine($date,$serial);
-          $firstRow = DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
+          $firstRow = DB::table('event_logs')->join('errors','event_logs.ERR_event','errors.err_code')->
                     where('serial',$serial)->
-                    whereDate('lot_events.created_at',$date)->first();
+                    whereDate('event_logs.MCGS_Time',$date)->first();
         
-         $assists = DB::table('lot_events')->join('errors','lot_events.ERR_event','errors.err_code')->
+         $assists = DB::table('event_logs')->join('errors','event_logs.ERR_event','errors.err_code')->
                     select('ERR_event','output')->
                     where('serial',$serial)->
-                    whereDate('lot_events.created_at',$date)->get();
+                    whereDate('event_logs.MCGS_Time',$date)->get();
           $totalErrors = 0;
           $debugArray = array();
    
@@ -157,61 +153,6 @@ class LogController extends Controller
         }
     }
 
-    private function getMUBA($date,$serial,$interval){
-        
-        $model = $this->getModel($serial);
-        $model_errors = $this->getAllErrors($model);
-        $dayOutput = $this->getDailyOutputByMachine($date,$serial);
-
-        $loops = ceil($dayOutput / $interval);
-
-        $firstRow = DB::table('lot_events')->where('serial',$serial)->whereDate('created_at',$date)->first();
-
-        $totalErrors = 0; // method 2
-        $startMark = $firstRow->output;
-        $endMark = $firstRow->output;
-
-
-       // $debugArray=array(); // method  1
-
-        for ($i = 0; $i < $loops; $i++){
-            $endMark += $interval;  
-            $partials = DB::table('lot_events')->where('serial',$serial)->whereDate('created_at',$date)
-                  ->where('output','<=',$endMark)->where('output','>=',$startMark)->get();
-
-		//  $errorArray = array(); // method  1
-          $assistArray = array(); // method  2
-           foreach($partials as $p){
-
-            foreach($model_errors as $e){
-                if($e->err_code == $p->ERR_event){
-
-                   // $errorArray[$e->err_code] = true; // method  1
-
-                    array_push($assistArray,$p->ERR_event); // method  2
-
-                }
-            }    
-
-
-           }
-           //  array_push($debugArray,$errorArray); // method 1
-
-            $assistArray = array_unique($assistArray); // method  2
-            $totalErrors += sizeof($assistArray); // method  2
-
-            $startMark += $interval; 
-
-        } 
-               
-
-        //$sizeOfTrue = $this->getSize($debugArray); // method 1
-        //dd($totalErrors);
-        //dd($sizeOfTrue);
-
-       return round($dayOutput/$totalErrors,2); // method 2
-      // return round($dayOutput/$sizeOfTrue,2); //method 1
-    }
 
     private function getSize($Arr){
          $sizeOfTrue =0;
@@ -227,31 +168,12 @@ class LogController extends Controller
 
 
     private function getDailyOutputByMachine($date,$serial){
-        $output = DB::table('lot_events')
+        $output = DB::table('event_logs')
                     ->select(DB::raw('max(output)-min(output) as output'))
                         ->where('serial',$serial)
-                        ->whereDate('created_at',$date)
+                        ->whereDate('MCGS_Time',$date)
                         ->value('output');
         return $output;
-    }
-
-}
-
-
-class Motorcycle {
-    protected $brand;
-    protected $cc;
-    public $color;
-    protected $model;
-    public function __construct($brand,$model,$cc,$color){
-        $this->brand = $brand;
-        $this->model =$model;
-        $this->cc = $cc;
-        $this->color = $color; 
-    }
-
-    public function brand(){
-        return $this->brand;
     }
 
 }

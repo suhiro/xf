@@ -9,7 +9,6 @@
 <body>
 <h1>Logs</h1>
 
-{{$bike->color}}
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -29,7 +28,7 @@
 
 <div class="form-group">
 <label for="view_date">View Date: </label>
-<input type="text" class="form-control" id="view_date" name="view_date">
+<input type="text" class="form-control" id="view_date" name="view_date" required>
 </div>
 <div class="form-group">
 <label for="interval">Interval: </label>
@@ -37,6 +36,8 @@
 </div>
 <button type="submit" class="btn btn-primary">Choose</button>
 </form>
+@include('layouts.errors')
+
 </div>
 </div>
 

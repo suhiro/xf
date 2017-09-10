@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Machines;
+use App\Event_log;
 use App\Work_log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,32 +12,83 @@ class uploadController extends Controller
 {
     public function index(){
 
-    	return view('upload.do_upload');
+    	return view('upload.uploadForm');
     	//return Machines::all();
 //    	return request()->input('task');
   //  	return DB::table('machines')->get();
     }
     public function doUpload(Request $request){
 
-    	$original = $request->file('work_log');
+    	$original = $request->file('csv_file');
 
     	$data = $this->csvToArray($original);
-    	$this->insertCsv($data);
+
+    	$this->insertEventLogs($data);
+        $workLogs = $this->createWorkLogs($data);
+        $this->insertWorkLogs($workLogs);
 
     	//dd(file_get_contents($original->getRealPath()));
-    	return view('upload.csv',compact('data'));
+    	return view('upload.csv',compact('data','workLogs'));
     }
 
-    private function insertCsv($data){
-    	foreach($data as $d){
-    		// if(!Work_log::findOrFail($d['serial']){
-    			Work_log::insert($d);
-    		// }
-    		
-    	}
+    private function insertEventLogs($data)
+    {
+        foreach($data as $log) {
+            if(!Event_log::where('MCGS_Time',$log['MCGS_Time'])->
+                            where('MCGS_TIMEMS',$log['MCGS_TIMEMS'])->
+                            where('serial',$log['serial'])->
+                            where('ERR_event',$log['ERR_event'])->first())
+            Event_log::insert($log);
+        }
+    }
+    private function insertWorkLogs($data)
+    {
+        foreach($data as $log) {
+            if(!Work_log::where('timeStart',$log['timeStart'])->
+                            where('timeEnd',$log['timeEnd'])->
+                            where('serial',$log['serial'])->
+                            where('output',$log['output'])->first())
+            Work_log::insert($log);
+        }
+    }
+
+    private function createWorkLogs($data){
+   
+    	$workLog = array();
+        $working = false;
+        foreach($data as $row){
+
+            if(stristr($row['ERR_event'],'START')){
+           $working = true;
+           $setCode = $row['TestSite_ON'];
+           $timeStart = $row['MCGS_Time'];
+           $qtyStart = $row['output'];
+           $start = date_create($timeStart);
+           
+              } else {
+                  if($working){
+                      $working = false;
+                     $timeStop = $row['MCGS_Time'];
+                     $stop = date_create($timeStop);
+                       $qtyStop = $row['output'];
+                       $current = array(
+                      'serial' => $row['serial'],
+                     'customer' => $row['user_id'],
+                     'customerId' => $row['user_id'],
+                     'setCode' => $setCode,
+                     'timeStart' => $timeStart,
+                     'timeEnd' => $timeStop,
+                     'workMinutes' => date_diff($start,$stop)->format('%i'),
+                     'output' => $qtyStop-$qtyStart,
+                     );
+                     array_push($workLog,$current);
+                     }
+             }
+         }
+         return $workLog;
     } 
 
-    function csvToArray($filename = '', $delimiter = ',')
+    private function csvToArray($filename = '', $delimiter = ',')
 {
     if (!file_exists($filename) || !is_readable($filename))
         return false;
@@ -50,7 +102,7 @@ class uploadController extends Controller
             if (!$header)
                 //$header = $row;
             //custom head names
-            	$header = ['serial','customer','customerId','setCode','timeStart','timeEnd','workMinutes','output'];
+            	$header = ['MCGS_Time','MCGS_TIMEMS','serial','user_id','ERR_event','TestSite_ON','output'];
             else
                 $data[] = array_combine($header, $row);
         }
