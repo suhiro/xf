@@ -1,35 +1,31 @@
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
+
 <html lang="en" class="no-js">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
-<meta charset="utf-8"/>
-<title>XF | Dashboard</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="production log" name="description"/>
-<meta content="Hiro" name="author"/>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="XF Technology dashboard">
+    <meta name="author" content="Hiro">
+    <link rel="icon" href="">
 	@include('layouts.assets')
 </head>
-<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
+<body>
 	@include('layouts.header')
-	<div class="clearfix"></div>
 
 <!-- BEGIN CONTAINER -->
-<div class="page-container">
+<div class="container-fluid">
+	 <div class="row">
+        
  @include('layouts.sidebar')
-
-
 
 
 	@yield('content')
 	
-	@include('layouts.footer')
 	
+	</div>
 </div>
-	
+@include('layouts.footer')
 </body>
 </html>

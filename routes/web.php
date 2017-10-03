@@ -1,11 +1,11 @@
 <?php
 use App\Machines;
 
-Route::get('/','LogController@log');
+Route::get('/','DashboardController@index');
 
-Route::get('log','LogController@log');
+Route::get('/log','LogController@log');
 
-Route::post('log','LogController@log');
+Route::post('/log','LogController@log');
 
 
 
