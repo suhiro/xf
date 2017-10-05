@@ -9,6 +9,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/log/">Analytics</a>
             </li>
+             <li class="nav-item">
+              <a class="nav-link" href="/machine/">Machines</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="/upload/">Import CSV</a>
             </li>

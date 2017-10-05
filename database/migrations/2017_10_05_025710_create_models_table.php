@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateErrorsTable extends Migration
+class CreateModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateErrorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('errors', function (Blueprint $table) {
+        Schema::create('models', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('model_id');
-            $table->string('err_code');
-            $table->text('description');
+            $table->string('name',64);
+            $table->string('description',128);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateErrorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('errors');
+        Schema::dropIfExists('models');
     }
 }

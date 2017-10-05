@@ -4,16 +4,24 @@
           <h1>Dashboard</h1>
 
           <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder">
+            @if($factories)
+              @foreach($factories as $f)
+
+               <div class="col-6 col-sm-3 placeholder">
               <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Factory 1</h4>
-              <div class="text-muted">Total XF: 20</div>
+              <h4>{{ $f->name }}</h4>
+              <div class="text-muted">Total XF: {{ $f->machine->count() }}</div>
             </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Factory 2</h4>
-              <span class="text-muted">Total XF: 40</span>
-            </div>
+
+              @endforeach
+            @endif
+           
+           
+          
+              <div class="col-6 col-sm-3 my-auto placeholder">
+              <h2 class="hover"><a href="/factory/create"><i class="fa fa-plus-square-o fa-3x" aria-hidden="true"></i></a></h2>
+              </div>
+        
            
           </section>
 

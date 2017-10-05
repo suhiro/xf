@@ -17,6 +17,9 @@ class CreateMachineTable extends Migration
             $table->increments('id');
             $table->string('serial');
             $table->string('model');
+            $table->integer('user_id');
+            $table->integer('factory_id');
+            $table->string('package');
             $table->timestamps();
 
         });
