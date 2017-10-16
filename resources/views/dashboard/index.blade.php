@@ -8,9 +8,11 @@
               @foreach($factories as $f)
 
                <div class="col-6 col-sm-3 placeholder">
+                <a href="/factory/{{$f->id}}">
               <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               <h4>{{ $f->name }}</h4>
               <div class="text-muted">Total XF: {{ $f->machine->count() }}</div>
+            </a>
             </div>
 
               @endforeach
@@ -36,20 +38,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>SOIC</td>
-                  <td>99</td>
-               
-                </tr>
-                <tr>
-                  <td>RESOP</td>
-                  <td>60</td>
-                </tr>
-                <tr>
-                  <td>EDIP</td>
-                  <td>80</td>
-                </tr>
-               
+                @foreach($output as $key => $val)
+              <tr>
+                <td>{{$key}}</td>
+                <td>{{$val}}</td>
+              </tr>
+
+                @endforeach
+          
               </tbody>
             </table>
           </div>

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 use App\Work_log;
+use App\Machine;
 
 class LogController extends Controller
 {
@@ -33,7 +34,8 @@ class LogController extends Controller
 
                 $obj->serial = $log->serial;
                 $obj->output = $this->getDailyOutputByMachine($viewDate,$log->serial);
-                $obj->model = $this->getModel($log->serial);
+              
+                $obj->model = Machine::where('serial',$log->serial)->first()->mod->name;
                 $obj->errors = $this->getTotalErrors($viewDate,$log->serial);
                 $muba = $this->getMUBA3($viewDate,$log->serial,$interval);
                 $obj->muba = $muba->muba;
@@ -58,9 +60,7 @@ class LogController extends Controller
 
     	return view('logs.log',compact('logs','machineArray'));
     }
-    private function getModel($serial){
-        return DB::table('machines')->where('serial',$serial)->value('model');
-    }
+   
     
     private function getAllErrors($model){
         return DB::table('erros')->where('model',$model)->get();

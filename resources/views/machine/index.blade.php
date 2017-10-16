@@ -14,8 +14,8 @@
               <tr>
                 <td>{{ $m->serial }}</td>
                 <td>{{ $m->user_serial }}</td>
-                <td>{{ $m->model_id }}</td>
-                <td>{{ $m->package }}</td>
+                <td>{{ $m->mod->name }}</td>
+                <td>{{ $m->mod->package }}</td>
                 <td>{{ $m->factory->name }}</td>
               </tr>
             @endforeach

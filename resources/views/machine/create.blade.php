@@ -16,23 +16,21 @@
     <input type="text" class="form-control" id="user_serial" name="user_serial" aria-describedby="user serial" placeholder="Enter user serial" required>
     <small id="user_seiral_help" class="form-text text-muted">used by the facotry to identify the machine</small>
   </div>
-  <div class="form-group">
-    <label for="model">model</label>
-    <input type="text" class="form-control" id="model" name="model" aria-describedby="model" placeholder="Enter machine model" required>
-   
-  </div>
 
   <div class="form-group">
-    <label for="package">package</label>
-    <input type="text" class="form-control" id="package" name="package" aria-describedby="package" placeholder="Enter machine package" required>
-   <small id="package-help" class="form-text text-muted">can be changed to selection</small>
-   
-   
+    <label for="model">model</label>
+    <select id="model" name="model" class="custom-select">
+      @foreach($models as $m)
+      <option value="{{$m->id}}">{{$m->name}}</option>
+      @endforeach
+    </select>
   </div>
+
+ 
 
   <div class="form-group">
     <label for="factory">Factory</label>
-    <select id="factory" name="factory" class="custome-select">
+    <select id="factory" name="factory" class="custom-select">
       @foreach($factories as $f)
       <option value="{{$f->id}}">{{$f->name}}</option>
       @endforeach

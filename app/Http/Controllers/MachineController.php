@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Machine;
 use App\Factory;
+use App\Mod;
 
 class MachineController extends Controller
 {
@@ -29,7 +30,8 @@ class MachineController extends Controller
     public function create()
     {
         $factories = Factory::where('user_id',Auth::id())->get();
-        return view('machine.create',compact('factories'));
+        $models = Mod::get();
+        return view('machine.create',compact('factories','models'));
     }
 
     /**
@@ -44,9 +46,8 @@ class MachineController extends Controller
         $machine->user_id = Auth::id();
         $machine->serial = $request->serial;
         $machine->user_serial = $request->user_serial;
-        $machine->model_id = $request->model;
+        $machine->mod_id = $request->model;
         $machine->factory_id = $request->factory;
-        $machine->package = $request->package; 
         $machine->save();
         return redirect('/machine');
     }

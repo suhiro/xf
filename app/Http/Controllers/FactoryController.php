@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Factory;
+use Carbon\Carbon;
 
 class FactoryController extends Controller
 {
@@ -52,7 +53,9 @@ class FactoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $dt = Carbon::now();
+        $factory = Factory::findOrFail($id);
+        return view('factory.index')->with('factory',$factory)->with('dt',$dt);
     }
 
     /**

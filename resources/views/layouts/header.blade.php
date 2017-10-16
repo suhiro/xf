@@ -18,6 +18,11 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Help</a>
           </li>
+          @if(Auth::check())
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}">Log Out</a>
+          </li>
+          @endif
         </ul>
        <!--  <form class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

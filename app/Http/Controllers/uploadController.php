@@ -123,6 +123,6 @@ class uploadController extends Controller
         User::firstOrCreate($customerArr[$i]);
     }
 
-    return 'Jobi done or what ever';    
+    return 'Job done or what ever';    
 }
 }

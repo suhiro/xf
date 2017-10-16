@@ -3,11 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Work_log extends Model
 {
     public static function aMethod(){
     	return true;
+    }
+
+    public static function monthToDateOutput($year,$month,$serial)
+    {
+      return DB::table('work_logs')->where('serial',$serial)->where(DB::raw('YEAR(timeStart)'),$year)->
+      where(DB::raw('MONTH(timeStart)'),$month)->sum('output');
     }
 
 

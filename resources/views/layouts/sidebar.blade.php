@@ -6,9 +6,16 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Reports</a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" href="/log/">Analytics</a>
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/day/">Dayview</a>
+            </li>
+
+
              <li class="nav-item">
               <a class="nav-link" href="/machine/">Machines</a>
             </li>

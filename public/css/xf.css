@@ -1,3 +1,45 @@
 .hover :hover{
 	color:#35da86;
 }
+
+div {
+	-webkit-box-sizing: border-box;
+}
+
+
+
+div.machine-report {
+	border: 1px solid black;
+	border-radius:15px;
+	margin:20px;
+	padding:20px 20px 20px 20px;
+}
+div.machine-info {
+	height:50px;
+	margin:0;
+	
+}
+.machine-id {
+	display:inline;
+}
+
+ul.kpi {
+	list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    display:inline;
+  
+}
+
+ul.kpi li {
+	display: block;
+    color: white;
+    background-color: #3897da;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    float:right;
+    margin:0 0 0 15px;
+    width:auto;
+    height:25px;
+}

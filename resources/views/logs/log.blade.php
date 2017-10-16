@@ -1,26 +1,14 @@
-<html>
-<title>Machine Work Log</title>
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-<link href="{{URL::asset('css/internal.css')}}" rel="stylesheet">
-<link href="{{URL::asset('css/dc.min.css')}}" rel="stylesheet">
 
-<body>
-<h1>Logs</h1>
+@extends('layouts.master')
+@section('content')
+<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+         <h1>Logs</h1>
 
-<script src="{{ URL::asset('js/jquery3.2.1.min.js') }}"></script>
-<sctipt src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></sctipt>
-
-<script src="js/moment.min.js"></script>
-<script src="js/bootstrap-datetimepicker.js"></script>
-<script src="js/logChart.js"></script>
-<script src="js/d3.js"></script>
-<script src="js/crossfilter.js"></script>
-<script src="js/dc.min.js"></script>
-
-<div class="row">
-<div class="col-md-3">
+          <section class="row">
+         
+<div class="col-md-4">
 <form method="post" action="{{url('log')}}" >
 {{csrf_field()}}
 
@@ -37,12 +25,13 @@
 @include('layouts.errors')
 
 </div>
-</div>
 
+ </section>
 
+@if($machineArray)
 @foreach($machineArray as $m)
 <div class="row">
-<div id="machine{{$m->serial}}" class="machine-report col-md-6">	
+<div id="machine{{$m->serial}}" class="machine-report col-md-8">	
 <div class="machine-info">
 <h4 class="machine-id">{{$m->serial}} - {{$m->model}}</h4>
 <ul class="kpi">
@@ -55,28 +44,46 @@
 	</div>
 </div>
 
-
 </div>
+@endforeach 
+@endif
+
+
 <script>
-var data = [
+document.addEventListener("DOMContentLoaded", function(event) { 
+	@if($machineArray)
+
+
+@foreach($machineArray as $m)
+
+    var data{{$m->serial}} = [
 	@foreach($m->logs as $l)
  {start:"{{$l->startTime}}",end:"{{$l->endTime}}"},
 	@endforeach
-];
-o2('machine{{$m->serial}}',data);
-</script>
+				];
+o2('machine{{$m->serial}}',data{{$m->serial}});
+@endforeach
+	@endif
 
-@endforeach 
+$("#view_date").datepicker({
+	dateFormat:'yy-mm-dd',
 
-</body>
-<script>
-$("#view_date").datetimepicker({
-	format:'YYYY-MM-DD',
 });
 
+
+
+});
+
+
 </script>
+</main>
+
+@endsection
 
 
 
-</body>
-</html>
+
+
+
+
+
