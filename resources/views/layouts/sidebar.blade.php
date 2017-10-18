@@ -22,6 +22,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/upload/">Import CSV</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/factory">Factories</a>
+            </li>
           </ul>
 
         </nav>

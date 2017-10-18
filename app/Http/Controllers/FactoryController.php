@@ -16,7 +16,8 @@ class FactoryController extends Controller
      */
     public function index()
     {
-        //
+        $factories = Factory::where('user_id',Auth::id())->get();
+        return view('factory.index')->with('factories',$factories);
     }
 
     /**
@@ -55,7 +56,7 @@ class FactoryController extends Controller
     {
         $dt = Carbon::now();
         $factory = Factory::findOrFail($id);
-        return view('factory.index')->with('factory',$factory)->with('dt',$dt);
+        return view('factory.week')->with('factory',$factory)->with('dt',$dt);
     }
 
     /**
@@ -75,7 +76,11 @@ class FactoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $factory = Factory::find($id);
+        $factory->name = $request->name;
+        $factory->description = $request->description;
+        $factory->save();
+        return redirect('/factory');
     }
 
     /**
@@ -88,8 +93,10 @@ class FactoryController extends Controller
     {
         //
     }
-     public function add()
+    public function edit($id)
     {
-        
+
+        $factory = Factory::findOrFail($id);
+        return view('factory.edit')->with('factory',$factory);
     }
 }

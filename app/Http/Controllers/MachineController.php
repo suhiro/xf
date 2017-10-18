@@ -71,7 +71,10 @@ class MachineController extends Controller
      */
     public function edit($id)
     {
-        //
+        $machine = Machine::find($id);
+        $factories = Factory::where('user_id',Auth::id())->select('id','name')->get();
+        $models = Mod::get();
+        return view('machine.edit')->withMachine($machine)->withFactories($factories)->withModels($models);
     }
 
     /**
@@ -83,7 +86,12 @@ class MachineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $machine = Machine::find($id);
+        $machine->user_serial = $request->user_serial;
+        $machine->mod_id = $request->mod;
+        $machine->factory_id = $request->factory;
+        $machine->save();
+        return redirect('/machine');
     }
 
     /**

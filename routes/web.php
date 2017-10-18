@@ -27,14 +27,18 @@ Route::get('/day','LogController@log');
 
 
 //Factory
+Route::get('/factory','FactoryController@index');
 Route::get('/factory/create','FactoryController@create');
 Route::post('/factory/store','FactoryController@store');
 Route::get('/factory/{id}','FactoryController@show');
-
+Route::get('/factory/{id}/show','FactoryController@edit');
+Route::post('/factory/{id}/update','FactoryController@update');
 // Machine
 Route::get('/machine','MachineController@index');
 Route::get('/machine/create','MachineController@create');
 Route::post('/machine/store','MachineController@store');
+Route::get('/machine/{id}/edit','MachineController@edit');
+Route::post('/machine/{id}/update','MachineController@update');
 //Auth
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');

@@ -99,13 +99,19 @@ class uploadController extends Controller
     {
         while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
         {
-            if (!$header)
+            if (!$header) {
                 //$header = $row;
+            
             //custom head names
             	$header = ['MCGS_Time','MCGS_TIMEMS','serial','user_id','ERR_event','TestSite_ON','output'];
-            else
-                $data[] = array_combine($header, $row);
+            } else {
+                    if($row[6] != 0){
+                         $data[] = array_combine($header, $row);
+                    } 
+                   
+                    }
         }
+        
         fclose($handle);
     }
 
