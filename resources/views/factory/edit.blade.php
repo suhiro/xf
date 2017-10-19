@@ -11,7 +11,7 @@
   <div class="form-group">
     {{ Form::label('name','Factory Name',['class' => '']) }}
     {{ Form::text('name',$factory->name,['class' => 'form-control']) }}
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
   </div>
   <div class="form-group">
      {{ Form::label('description','Description',['class' => '']) }}
