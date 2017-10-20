@@ -58,7 +58,7 @@ class LogController extends Controller
             } 
     	}
 
-    	return view('logs.log',compact('logs','machineArray'));
+    	return view('logs.log',compact('logs','machineArray','viewDate'));
     }
    
     
@@ -139,6 +139,8 @@ class LogController extends Controller
 
 
         $result = (object)'';
+        if($totalErrors == 0) { // in case total errors is zero
+            $totalErrors = 1;}
         $result->muba = round($dayOutput/$totalErrors,2);
         $result->assists =  $totalErrors;
        return $result;

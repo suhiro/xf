@@ -6,7 +6,8 @@
 <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
          <h1>Logs</h1>
 
-          <section class="row">
+
+<section class="row">
          
 <div class="col-md-4">
 <form method="post" action="{{url('log')}}" >
@@ -14,13 +15,13 @@
 
 <div class="form-group">
 <label for="view_date">View Date: </label>
-<input type="text" class="form-control" id="view_date" name="view_date" required>
+<input type="text" class="form-control" id="view_date" value="{{ $viewDate }}" name="view_date" required>
 </div>
 <div class="form-group">
 <label for="interval">Interval: </label>
 <input type="number" step="100" min="100" max="10000" class="form-control"  name="interval" value="100">
 </div>
-<button type="submit" class="btn btn-primary">Choose</button>
+<button type="submit" class="btn btn-primary">View</button>
 </form>
 @include('layouts.errors')
 
@@ -78,12 +79,6 @@ $("#view_date").datepicker({
 </script>
 </main>
 
+
+
 @endsection
-
-
-
-
-
-
-
-

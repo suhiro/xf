@@ -21,6 +21,8 @@
 <script src="{{URL::asset('assets/global/plugins/jquery.cokie.min.js')}}" ></script>
 <script src="{{URL::asset('assets/global/plugins/uniform/jquery.uniform.min.js')}}" ></script>
 <script src="{{URL::asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" ></script>
+
+<script src="{{URL::asset('js/vue.js')}}"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 
