@@ -29,12 +29,12 @@ class DashboardController extends Controller
     	foreach($machines as $m){
     		switch($m->mod->package){
     		case 'SOIC':
-    				$output['SOIC'] += Work_log::monthToDateOutput($dt->year,$dt->month,$m->serial);
+    				$output['SOIC'] += Work_log::monthToDateOutput($dt->toDateString(),$m->serial);
     				
 
     				break;
     		case 'RESOP':
-    				$output['RESOP'] += Work_log::monthToDateOutput($dt->year,$dt->month,$m->serial);
+    				$output['RESOP'] += Work_log::monthToDateOutput($dt->toDateString(),$m->serial);
     			
 
     				break;

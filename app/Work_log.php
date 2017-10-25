@@ -4,17 +4,29 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Work_log extends Model
 {
-    public static function aMethod(){
-    	return true;
-    }
+    // public static function aMethod(){
+    // 	return true;
+    // }
 
-    public static function monthToDateOutput($year,$month,$serial)
+    // public static function monthToDateOutputOLD($year,$month,$serial)
+    // {
+    //   return DB::table('work_logs')->where('serial',$serial)->where(DB::raw('YEAR(timeStart)'),$year)->
+    //   where(DB::raw('MONTH(timeStart)'),$month)->sum('output');
+    // }
+
+    public static function monthToDateOutput($dt,$serial)
     {
-      return DB::table('work_logs')->where('serial',$serial)->where(DB::raw('YEAR(timeStart)'),$year)->
-      where(DB::raw('MONTH(timeStart)'),$month)->sum('output');
+      $dt = Carbon::createFromFormat('Y-m-d',$dt);
+      $start = $dt->startOfMonth()->toDateString();
+      $end = $dt->endOfMonth()->toDateString();
+    
+      $max = DB::table('event_logs')->where('serial',$serial)->whereBetween('MCGS_Time',[$start,$end])->max('output');
+      $min = DB::table('event_logs')->where('serial',$serial)->whereBetween('MCGS_Time',[$start,$end])->min('output');
+      return $max - $min;
     }
 
 
