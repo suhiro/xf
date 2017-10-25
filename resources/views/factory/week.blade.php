@@ -2,6 +2,7 @@
 @section('content')
 <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
           <h1>{{$factory->name}}</h1>
+          <h3>Current Week {{$dt->startOfWeek()->toDateString().' ~ '.$dt->endOfWeek()->toDateString()}}</h3>
 
           <section class="row text-center placeholders">
 
