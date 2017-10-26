@@ -52,9 +52,16 @@ class FactoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $r)
     {
-        $dt = Carbon::now();
+        if(!$r->viewWeek){
+            $dt = Carbon::now();
+        } else {
+            //dd($r);
+            $dt = Carbon::createFromFormat('Y-m-d',$r->viewWeek);
+            $dt->startOfWeek();
+        }
+        
         $factory = Factory::findOrFail($id);
         return view('factory.week')->with('factory',$factory)->with('dt',$dt);
     }

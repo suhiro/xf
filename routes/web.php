@@ -33,6 +33,7 @@ Route::post('/factory/store','FactoryController@store');
 Route::get('/factory/{id}','FactoryController@show');
 Route::get('/factory/{id}/show','FactoryController@edit');
 Route::post('/factory/{id}/update','FactoryController@update');
+Route::post('/factory/{id}','FactoryController@show');
 // Machine
 Route::get('/machine','MachineController@index');
 Route::get('/machine/create','MachineController@create');
