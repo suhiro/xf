@@ -16,6 +16,10 @@ class Machine extends Model
     {
     	return $this->belongsTo('App\Mod');
     }
+    public function package()
+    {
+        return $this->belongsTo('App\Package');
+    }
 
     public static function output($date,$serial)
     {
@@ -27,4 +31,5 @@ class Machine extends Model
         return $output;
     
     }
+
 }

@@ -34,7 +34,7 @@
 <div class="row">
 <div id="machine{{$m->serial}}" class="machine-report col-md-8">	
 <div class="machine-info">
-<h4 class="machine-id">{{$m->serial}} - {{$m->model}}</h4>
+<h4 class="machine-id">{{$m->serial}}({{ $m->userSerial }}) - {{$m->model}}</h4>
 <ul class="kpi">
 <li>Assists: {{$m->errors}}</li>
 <li>E.A: {{$m->assists}}</li>

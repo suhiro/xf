@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Machine;
 use App\Factory;
 use App\Mod;
+use App\Package;
 
 class MachineController extends Controller
 {
@@ -31,7 +32,8 @@ class MachineController extends Controller
     {
         $factories = Factory::where('user_id',Auth::id())->get();
         $models = Mod::get();
-        return view('machine.create',compact('factories','models'));
+        $packages = Package::get();
+        return view('machine.create',compact('factories','models','packages'));
     }
 
     /**
@@ -48,6 +50,7 @@ class MachineController extends Controller
         $machine->user_serial = $request->user_serial;
         $machine->mod_id = $request->model;
         $machine->factory_id = $request->factory;
+        $machine->package_id = $request->package;
         $machine->save();
         return redirect('/machine');
     }
@@ -74,7 +77,8 @@ class MachineController extends Controller
         $machine = Machine::find($id);
         $factories = Factory::where('user_id',Auth::id())->select('id','name')->get();
         $models = Mod::get();
-        return view('machine.edit')->withMachine($machine)->withFactories($factories)->withModels($models);
+        $packages = Package::get();
+        return view('machine.edit')->withMachine($machine)->withFactories($factories)->withModels($models)->withPackages($packages);
     }
 
     /**
@@ -90,6 +94,7 @@ class MachineController extends Controller
         $machine->user_serial = $request->user_serial;
         $machine->mod_id = $request->mod;
         $machine->factory_id = $request->factory;
+        $machine->package_id = $request->package;
         $machine->save();
         return redirect('/machine');
     }

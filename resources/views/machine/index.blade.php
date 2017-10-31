@@ -15,7 +15,7 @@
                 <td>{{ $m->serial }}</td>
                 <td>{{ $m->user_serial }}</td>
                 <td>{{ $m->mod->name }}</td>
-                <td>{{ $m->mod->package }}</td>
+                <td>{{ $m->package->package }}</td>
                 <td>{{ $m->factory->name }}</td>
                 <td><a class="btn btn-sm btn-primary" href="/machine/{{$m->id}}/edit">Edit</a></td>
               </tr>

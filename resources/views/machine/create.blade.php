@@ -26,6 +26,15 @@
     </select>
   </div>
 
+  <div class="form-group">
+    <label for="package">package</label>
+    <select id="package" name="package" class="custom-select">
+      @foreach($packages as $p)
+      <option value="{{$p->id}}">{{$p->package}}</option>
+      @endforeach
+    </select>
+  </div>
+
  
 
   <div class="form-group">

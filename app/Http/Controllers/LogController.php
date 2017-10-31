@@ -36,6 +36,14 @@ class LogController extends Controller
                 $obj->output = $this->getDailyOutputByMachine($viewDate,$log->serial);
               
                 $obj->model = Machine::where('serial',$log->serial)->first()->mod->name;
+
+                $userSerial = Machine::where('serial',$log->serial)->first()->user_serial;
+                if($userSerial == null){
+                    $obj->userSerial = 'undefined';
+                } else {
+                    $obj->userSerial = $userSerial;
+                }
+
                 $obj->errors = $this->getTotalErrors($viewDate,$log->serial);
                 $muba = $this->getMUBA3($viewDate,$log->serial,$interval);
                 $obj->muba = $muba->muba;

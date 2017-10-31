@@ -28,13 +28,26 @@
   </div>
 
    <div class="form-group">
-    {{ Form::label('mod','Model - Package',['class' => '']) }}
+    {{ Form::label('mod','Model',['class' => '']) }}
     <select name="mod" id="mod" class="form-control">
       @foreach($models as $m)
       @if($m->id == $machine->mod_id)
-        <option value="{{$m->id}}" selected>{{$m->name}} - {{$m->package}}</option> 
+        <option value="{{$m->id}}" selected>{{$m->name}}</option> 
        @else
-        <option value="{{$m->id}}">{{$m->name}} - {{$m->package}}</option>
+        <option value="{{$m->id}}">{{$m->name}}</option>
+         @endif
+      @endforeach
+    </select>
+  </div>
+
+   <div class="form-group">
+    {{ Form::label('package','Package',['class' => '']) }}
+    <select name="package" id="package" class="form-control">
+      @foreach($packages as $p)
+      @if($p->id == $machine->package_id)
+        <option value="{{$p->id}}" selected>{{$p->package}}</option> 
+       @else
+        <option value="{{$p->id}}">{{$p->package}}</option>
          @endif
       @endforeach
     </select>

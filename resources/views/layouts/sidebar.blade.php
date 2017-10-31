@@ -25,6 +25,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/factory">Factories</a>
             </li>
+             <li class="nav-item">
+              <a class="nav-link" href="/package">Packages</a>
+            </li>
           </ul>
 
         </nav>

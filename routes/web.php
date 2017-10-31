@@ -45,3 +45,10 @@ Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'DashboardController@index')->name('home');
 Route::get('/logout','Auth\LoginController@logout');
+
+//Packages
+Route::get('/package','PackageController@index');
+Route::get('/package/create','PackageController@create');
+Route::post('/package/store','PackageController@store');
+Route::get('/package/{id}/edit','PackageController@edit');
+Route::post('/package/{id}/update','PackageController@update');

@@ -27,7 +27,7 @@ class DashboardController extends Controller
     	);
     	
     	foreach($machines as $m){
-    		switch($m->mod->package){
+    		switch($m->package->package){
     		case 'SOIC':
     				$output['SOIC'] += Work_log::monthToDateOutput($dt->toDateString(),$m->serial);
     				
