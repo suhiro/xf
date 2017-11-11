@@ -6,6 +6,7 @@
 <link href="{{URL::asset('css/jquery-ui.min.css')}}" rel="stylesheet">
 <link href="{{URL::asset('css/bootstrap-datetimepicker.min.css')}}" rel="styleseet">
 
+
 <script src="https://use.fontawesome.com/52420008fb.js"></script>
 <link href="{{URL::asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css')}}" rel="styleseet">
 <link href="{{URL::asset('assets/global/plugins/uniform/css/uniform.default.css')}}" rel="styleseet">

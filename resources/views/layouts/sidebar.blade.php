@@ -4,7 +4,7 @@
               <a class="nav-link" href="/home">Overview</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Reports</a>
+              <a class="nav-link " href="/jams">Jam Summary</a>
             </li>
 
             <li class="nav-item">

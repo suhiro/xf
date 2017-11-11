@@ -20,6 +20,11 @@ Route::get('/upload/{id}',function($id){
 Route::post('/upload','uploadController@doUpload');
 
 
+// Jam Summary
+Route::get('/jams','JamController@index');
+Route::post('/jams/summary','JamController@summary');
+
+
 // Analitics
 Route::get('/day','LogController@log');
 
