@@ -3,7 +3,7 @@
 <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
           <h1>Jams Summary</h1>
 <div class="row">
-<div class="col-3">
+<div class="col-5">
 
   <div class="form-group">
     <label for="viewRange">Period</label>
@@ -41,7 +41,7 @@ $.post(
   function(data,status){
     if(status == 'success'){
       $('#machines').html(data);
-      console.log(data);
+ 
     }
   }
   );

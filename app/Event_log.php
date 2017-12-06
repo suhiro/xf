@@ -27,6 +27,7 @@ class Event_log extends Model
     			}
 
     		}
+            arsort($result); //Sort Array (Descending Order), According to Value - arsort()
     		return $result;
 
     	} else {

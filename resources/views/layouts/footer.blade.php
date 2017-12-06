@@ -30,6 +30,7 @@
 <!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
 <script src="{{URL::asset('assets/global/plugins/fullcalendar/fullcalendar.min.js')}}" ></script>
 <script src="{{URL::asset('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js')}}" ></script>
+<script src="{{ asset('js/chartist.min.js') }}"></script>
 
 
 <!-- END JAVASCRIPTS -->

@@ -13,6 +13,7 @@
 <link href="{{URL::asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="styleseet">
 <!-- END GLOBAL MANDATORY STYLES -->
 <link href="{{URL::asset('assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet">
+<link href="{{ asset('css/chartist.min.css') }}" rel="stylesheet">
 <link href="{{URL::asset('css/dashboard.css')}}" rel="stylesheet">
 <link href="{{URL::asset('css/xf.css')}}" rel="stylesheet">
 
