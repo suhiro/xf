@@ -7,7 +7,7 @@
 
         <table class="table table-sm">
           <thead>
-            <tr><th>Serial</th><th>user_serial</th><th>Model</th><th>Package</th><th>Factory</th><th>Edit</th></tr>
+            <tr><th>Serial</th><th>user_serial</th><th>Model</th><th>Package</th><th>Factory</th><th>Action</th></tr>
           </thead>
           <tbody>
             @foreach($machines as $m)
@@ -17,7 +17,8 @@
                 <td>{{ $m->mod->name }}</td>
                 <td>{{ $m->package->package }}</td>
                 <td>{{ $m->factory->name }}</td>
-                <td><a class="btn btn-sm btn-primary" href="/machine/{{$m->id}}/edit">Edit</a></td>
+                <td><a class="btn btn-sm btn-primary" href="/machine/{{$m->id}}/edit">Edit</a>
+                </td>
               </tr>
             @endforeach
           </tbody>
@@ -28,6 +29,5 @@
 
         <a class="btn btn-primary" href="/machine/create" role="button">New Machine</a>
 
-          
-        </main>
+</main>
 @endsection

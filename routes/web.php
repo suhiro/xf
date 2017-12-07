@@ -39,12 +39,21 @@ Route::get('/factory/{id}','FactoryController@show');
 Route::get('/factory/{id}/show','FactoryController@edit');
 Route::post('/factory/{id}/update','FactoryController@update');
 Route::post('/factory/{id}','FactoryController@show');
+// Model
+Route::get('/model','ModelController@index');
+Route::get('/model/{model}/show','ModelController@show');
+Route::get('/model/create','ModelController@create');
+Route::post('/model/store','ModelController@store');
+Route::get('/model/{id}/edit','ModelController@edit');
+Route::post('/model/{id}/update','ModelController@update');
+Route::post('/model/{model}/remove','ModelController@destroy');
 // Machine
 Route::get('/machine','MachineController@index');
 Route::get('/machine/create','MachineController@create');
 Route::post('/machine/store','MachineController@store');
 Route::get('/machine/{id}/edit','MachineController@edit');
 Route::post('/machine/{id}/update','MachineController@update');
+Route::post('/machine/{machine}/remove','MachineController@destroy');
 //Auth
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');

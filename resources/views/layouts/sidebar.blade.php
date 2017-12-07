@@ -16,14 +16,18 @@
             </li>
 
 
-             <li class="nav-item">
-              <a class="nav-link" href="/machine">Machines</a>
-            </li>
+            
             <li class="nav-item">
               <a class="nav-link" href="/upload">Import CSV</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/factory">Factories</a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="/machine">Machines</a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="/model">Model Manager</a>
             </li>
              <li class="nav-item">
               <a class="nav-link" href="/package">Packages</a>
