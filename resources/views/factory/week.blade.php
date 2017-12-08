@@ -25,7 +25,7 @@
               <tr>
                 <td>{{$m->serial}}</td>
                 <td>{{$m->user_serial}}</td>
-                <td>{{$m->mod->package}}</td>
+                <td>{{$m->mod->package->package}}</td>
                 <td>{{ $m->output($dt->startOfWeek()->toDateString(),$m->serial)}}</td>
                 <td>{{$m->output($dt->addDays(1)->toDateString(),$m->serial)}}</td>
                 <td>{{$m->output($dt->addDays(1)->toDateString(),$m->serial)}}</td> 
