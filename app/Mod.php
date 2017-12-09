@@ -19,4 +19,8 @@ class Mod extends Model
     {
     	return $this->belongsTo('App\package');
     }
+    public function component()
+    {
+        return $this->hasMany('App\Component');
+    }
 }

@@ -88,10 +88,11 @@ class JamController extends Controller
         $machines = Machine::where('user_id',Auth::id())->get();
 
         foreach($machines as $m){
+            $errors = $m->mod->error->pluck('err_code')->toArray();
+            //dd($errors);
             $events = Event_log::where('serial',$m->serial)->whereBetween('MCGS_Time',[$r->start,$r->end])->get();
-            $m->summary = Event_log::jamSummary($events);
+            $m->summary = Event_log::jamSummary($events,$errors);
         }
-
 
         return view('jam/summary',compact('machines'));
     }

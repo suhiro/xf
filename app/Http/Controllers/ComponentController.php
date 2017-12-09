@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Error;
 use App\Mod;
+use App\Component;
 
-class ErrorController extends Controller
+class ComponentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +23,11 @@ class ErrorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $model = Mod::findOrFail($id);
+        return view('model/component/create',compact('model'));
+    
     }
 
     /**
@@ -36,7 +38,12 @@ class ErrorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $component = Component::create([
+            'name' => $request->componentName,
+            'description' => $request->description,
+            'mod_id' => $request->model_id,
+        ]);
+        return redirect('/model/'.$request->model_id.'/show');
     }
 
     /**
@@ -56,10 +63,9 @@ class ErrorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Error $error)
+    public function edit($id)
     {
-        $models = Mod::get();
-        return view('model.error.edit',compact('error','models'));
+        //
     }
 
     /**
@@ -71,14 +77,7 @@ class ErrorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $error = Error::find($id);
-       
-        $error->err_code = $request->errorCode;
-        $error->mod_id = $request->model;
-        $error->description = $request->description;
-        $error->component_id = $request->component;
-        $error->save();
-        return redirect('/model/'.$error->mod->id.'/show');
+        //
     }
 
     /**

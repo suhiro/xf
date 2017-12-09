@@ -47,6 +47,12 @@ Route::post('/model/store','ModelController@store');
 Route::get('/model/{id}/edit','ModelController@edit');
 Route::post('/model/{id}/update','ModelController@update');
 Route::post('/model/{model}/remove','ModelController@destroy');
+// Error
+Route::get('/model/error/{error}/edit','ErrorController@edit');
+Route::post('/model/error/{id}/update','ErrorController@update');
+// Component
+Route::get('/model/{id}/component/create','ComponentController@create');
+Route::post('/model/component/store','ComponentController@store');
 // Machine
 Route::get('/machine','MachineController@index');
 Route::get('/machine/create','MachineController@create');

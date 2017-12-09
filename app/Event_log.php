@@ -12,20 +12,23 @@ class Event_log extends Model
     	return Event_log;
     }
 
-    public static function jamSummary($logs)
+    public static function jamSummary($logs,$errors)
     {
     	if(sizeof($logs))
     	{
     		$result = array();
     		foreach($logs as $log){
 
-    			if( !isset($result[$log->ERR_event]) )
-    			{
-    				$result[$log->ERR_event] = 1;
-    			} else {
-    				$result[$log->ERR_event] += 1;
-    			}
+                if( in_array($log->ERR_event,$errors) ){
+                    if( !isset($result[$log->ERR_event]) )
+                        {
+                          $result[$log->ERR_event] = 1; 
+                        } else {
+                        $result[$log->ERR_event] += 1;
+                        }
+                }
 
+    		
     		}
             arsort($result); //Sort Array (Descending Order), According to Value - arsort()
     		return $result;
