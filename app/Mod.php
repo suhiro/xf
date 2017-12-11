@@ -17,7 +17,7 @@ class Mod extends Model
     }
     public function package()
     {
-    	return $this->belongsTo('App\package');
+    	return $this->belongsTo('App\Package');
     }
     public function component()
     {
