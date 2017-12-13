@@ -11,7 +11,17 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+        $subheader = 'Overview';
+        $machines = Machine::where('user_id',Auth::id())->get();
+
+        return view('machine.index',compact('machines','subheader'));
+    }
+
+
+
+    public function indexOLD(){
 
     	$dt = Carbon::now();
 

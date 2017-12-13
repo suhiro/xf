@@ -1,13 +1,26 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <h1>Machines</h1>
 
+
+ <div class="row">
+    <div class="col-lg-12">  
+      <!--begin::Portlet-->
+      <div class="m-portlet m-portlet--mobile">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              Machines <small>under your account</small>
+            </h3>
+          </div>      
+        </div>
+      </div>
+      <div class="m-portlet__body">
         @if($machines)
 
         <table class="table table-sm">
           <thead>
-            <tr><th>Serial</th><th>user_serial</th><th>Model</th><th>Package</th><th>Factory</th><th>Action</th></tr>
+            <tr><th>Serial</th><th>user_serial</th><th>Model</th><th>Package</th><th>Factory</th><th>Actions</th></tr>
           </thead>
           <tbody>
             @foreach($machines as $m)
@@ -17,7 +30,8 @@
                 <td>{{ $m->mod->name }}</td>
                 <td>{{ $m->package->package }}</td>
                 <td>{{ $m->factory->name }}</td>
-                <td><a class="btn btn-sm btn-primary" href="/machine/{{$m->id}}/edit">Edit</a>
+                <td><a class="btn btn-sm btn-success" href="/machine/{{$m->id}}/edit">View Detail</a> 
+                  <a class="btn btn-sm btn-primary" href="/machine/{{$m->id}}/edit">Edit</a>
                 </td>
               </tr>
             @endforeach
@@ -26,8 +40,9 @@
 
 
         @endif
-
-        <a class="btn btn-primary" href="/machine/create" role="button">New Machine</a>
-
-</main>
+      </div>
+    </div>  
+    <!--end::Portlet-->
+  </div>
+</div>
 @endsection

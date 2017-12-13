@@ -74,11 +74,12 @@ class MachineController extends Controller
      */
     public function edit($id)
     {
+        $subheader = "Machine";
         $machine = Machine::find($id);
         $factories = Factory::where('user_id',Auth::id())->select('id','name')->get();
         $models = Mod::get();
         $packages = Package::get();
-        return view('machine.edit')->withMachine($machine)->withFactories($factories)->withModels($models)->withPackages($packages);
+        return view('machine.edit',compact('subheader'))->withMachine($machine)->withFactories($factories)->withModels($models)->withPackages($packages);
     }
 
     /**

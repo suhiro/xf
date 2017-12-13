@@ -1,8 +1,21 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <h1>Machine Edit</h1>
-          <h4>{{$machine->serial}}</h4>
+ <div class="row">
+    <div class="col-lg-12">  
+      <!--begin::Portlet-->
+      <div class="m-portlet m-portlet--mobile">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              Machine Edit <small>make changes to the machine</small>
+            </h3>
+          </div>      
+        </div>
+      </div>
+      <div class="m-portlet__body">
+        
+         <h4>{{$machine->serial}}</h4>
 
           <section class="row">
 
@@ -60,8 +73,18 @@
             
           </section>
 
-    
-        </main>
+
+
+      </div>
+    </div>  
+    <!--end::Portlet-->
+  </div>
+</div>
+
+
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
