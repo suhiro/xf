@@ -12,3 +12,4 @@ yarn-error.log
 .env
 app/Http/Controllers/LogController.php
 app/Http/Controllers/LogController.php
+.DS_Store
