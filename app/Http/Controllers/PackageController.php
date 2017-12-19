@@ -14,9 +14,10 @@ class PackageController extends Controller
      */
     public function index()
     {
+        $subheader = 'Package';
         $packages = Package::get();
 
-        return view('package.index',compact('packages'));
+        return view('package.index',compact('packages','subheader'));
     }
 
     /**
@@ -26,7 +27,8 @@ class PackageController extends Controller
      */
     public function create()
     {
-        return view('package.create');
+        $subheader = 'Package';
+        return view('package.create',compact('subheader'));
     }
 
     /**
@@ -63,8 +65,9 @@ class PackageController extends Controller
      */
     public function edit($id)
     {
+        $subheader = 'Package';
         $package = Package::findOrFail($id);
-        return view('package.edit')->withPackage($package);
+        return view('package.edit',compact('package','subheader'));
     }
 
     /**
@@ -92,6 +95,7 @@ class PackageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Package::destroy($id);
+        return redirect('/package');
     }
 }

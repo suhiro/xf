@@ -1,8 +1,8 @@
 @extends('layouts.master')
 @section('content')
 
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <h1>Create New Model</h1>
+<main class="" role="main">
+          <h2>Create New Model</h2>
 
 <div class="row">
   <div class="col-lg-8 col-sm-12" >

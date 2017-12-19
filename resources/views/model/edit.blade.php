@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <h1>Edit Model</h1>
+<main class="" role="main">
+          <h2>Edit Model</h2>
 
 <div class="row">
   <div class="col-lg-8 col-sm-12" >
@@ -57,7 +57,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you absolutely sure to remove this modal? Make sure all machines associated with this model have been taken care of..
+        Are you absolutely sure to remove this model? Make sure all machines associated with this model have been taken care of..
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

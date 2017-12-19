@@ -49,7 +49,7 @@
 											<span class="m-menu__arrow m-menu__arrow--adjust"></span>
 											<ul class="m-menu__subnav">
 												<li class="m-menu__item "  aria-haspopup="true">
-													<a  href="inner.html" class="m-menu__link ">
+													<a  href="/upload/csv" class="m-menu__link ">
 														<i class="m-menu__link-icon flaticon-file"></i>
 														<span class="m-menu__link-text">
 															Import CSV
@@ -80,14 +80,14 @@
 														<span class="m-menu__arrow "></span>
 														<ul class="m-menu__subnav">
 															<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																<a  href="inner.html" class="m-menu__link ">
+																<a  href="/model" class="m-menu__link ">
 																	<span class="m-menu__link-text">
 																		Current Models
 																	</span>
 																</a>
 															</li>
 															<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																<a  href="inner.html" class="m-menu__link ">
+																<a  href="/model/create" class="m-menu__link ">
 																	<span class="m-menu__link-text">
 																		Create New Model
 																	</span>
@@ -111,16 +111,46 @@
 														<span class="m-menu__arrow "></span>
 														<ul class="m-menu__subnav">
 															<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																<a  href="inner.html" class="m-menu__link ">
+																<a  href="/package" class="m-menu__link ">
 																	<span class="m-menu__link-text">
 																		Current Packages
 																	</span>
 																</a>
 															</li>
 															<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
-																<a  href="inner.html" class="m-menu__link ">
+																<a  href="/package/create" class="m-menu__link ">
 																	<span class="m-menu__link-text">
 																		Create New Package
+																	</span>
+																</a>
+															</li>
+														
+														</ul>
+													</div>
+												</li>
+												<li class="m-menu__item  m-menu__item--submenu"  data-menu-submenu-toggle="hover" data-redirect="true" aria-haspopup="true">
+													<a  href="#" class="m-menu__link m-menu__toggle">
+														<i class="m-menu__link-icon flaticon-chat-1"></i>
+														<span class="m-menu__link-text">
+															Factory
+														</span>
+														<i class="m-menu__hor-arrow la la-angle-right"></i>
+														<i class="m-menu__ver-arrow la la-angle-right"></i>
+													</a>
+													<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right">
+														<span class="m-menu__arrow "></span>
+														<ul class="m-menu__subnav">
+															<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
+																<a  href="/factory" class="m-menu__link ">
+																	<span class="m-menu__link-text">
+																		Current Factories
+																	</span>
+																</a>
+															</li>
+															<li class="m-menu__item "  data-redirect="true" aria-haspopup="true">
+																<a  href="/factory/create" class="m-menu__link ">
+																	<span class="m-menu__link-text">
+																		Create New Factory
 																	</span>
 																</a>
 															</li>
@@ -184,7 +214,7 @@
 										<li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" data-dropdown-toggle="click">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic">
-													<img src="/assets/app/media/img/users/user3.jpg" alt=""/>
+													<img src="/assets/app/media/img/users/user6.jpg" alt=""/>
 												</span>
 											</a>
 											<div class="m-dropdown__wrapper">
@@ -193,7 +223,7 @@
 													<div class="m-dropdown__header m--align-center" style="background: url(assets/app/media/img/misc/user_profile_bg.jpg); background-size: cover;">
 														<div class="m-card-user m-card-user--skin-dark">
 															<div class="m-card-user__pic">
-																<img src="/assets/app/media/img/users/user3.jpg" alt=""/>
+																<img src="/assets/app/media/img/users/user6.jpg" alt=""/>
 															</div>
 															<div class="m-card-user__details">
 																<span class="m-card-user__name m--font-weight-500">

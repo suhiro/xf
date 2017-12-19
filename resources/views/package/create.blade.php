@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+<main class="" role="main">
           <h1>Create new package</h1>
 
         <form method="POST" action="/package/store">
@@ -23,7 +23,7 @@
 
 
 
-  <button type="submit" class="btn btn-primary">Create Machine</button>
+  <button type="submit" class="btn btn-primary">Create Package</button>
 </form>
 
           

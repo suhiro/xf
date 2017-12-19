@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+<main class="" role="main">
           <h1>Packages</h1>
 
       

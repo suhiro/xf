@@ -25,8 +25,9 @@ class ComponentController extends Controller
      */
     public function create($id)
     {
+        $subheader = "Component";
         $model = Mod::findOrFail($id);
-        return view('model/component/create',compact('model'));
+        return view('model/component/create',compact('model','subheader'));
     
     }
 

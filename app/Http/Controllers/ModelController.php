@@ -15,8 +15,9 @@ class ModelController extends Controller
      */
     public function index()
     {
+        $subheader = "Model Manager";
         $models = Mod::get();
-        return view('model.index',compact('models'));
+        return view('model.index',compact('models','subheader'));
     }
 
     /**
@@ -26,8 +27,9 @@ class ModelController extends Controller
      */
     public function create()
     {
+        $subheader = "Model Manager";
         $packages = Package::get();
-        return view('model.create',compact('packages'));
+        return view('model.create',compact('packages','subheader'));
     }
 
     /**
@@ -54,8 +56,9 @@ class ModelController extends Controller
      */
     public function show(Mod $model)
     {
+        $subheader = "Model Manager";
         $model->error;
-        return view('model.detail',compact('model'));
+        return view('model.detail',compact('model','subheader'));
     }
 
     /**
@@ -66,9 +69,10 @@ class ModelController extends Controller
      */
     public function edit($id)
     {
+        $subheader = "Model Manager";
         $model = Mod::find($id);
         $packages = Package::get();
-        return view('model.edit',compact('model','packages'));
+        return view('model.edit',compact('model','packages','subheader'));
     }
 
     /**

@@ -13,7 +13,7 @@ Route::post('/log','LogController@log');
 
 
 //uploading csv file
-Route::get('/upload','uploadController@index');
+Route::get('/upload/csv','uploadController@index');
 Route::get('/upload/{id}',function($id){
 	return Machines::find($id);
 });
@@ -39,6 +39,7 @@ Route::get('/factory/{id}','FactoryController@show');
 Route::get('/factory/{id}/show','FactoryController@edit');
 Route::post('/factory/{id}/update','FactoryController@update');
 Route::post('/factory/{id}','FactoryController@show');
+Route::get('/factory/{id}/remove','FactoryController@destroy');
 // Model
 Route::get('/model','ModelController@index');
 Route::get('/model/{model}/show','ModelController@show');
@@ -48,8 +49,12 @@ Route::get('/model/{id}/edit','ModelController@edit');
 Route::post('/model/{id}/update','ModelController@update');
 Route::post('/model/{model}/remove','ModelController@destroy');
 // Error
+Route::get('/model/{id}/error/create','ErrorController@create');
 Route::get('/model/error/{error}/edit','ErrorController@edit');
 Route::post('/model/error/{id}/update','ErrorController@update');
+Route::post('/model/error/{id}/store','ErrorController@store');
+Route::post('/model/error/destroy','ErrorController@destroy');
+
 // Component
 Route::get('/model/{id}/component/create','ComponentController@create');
 Route::post('/model/component/store','ComponentController@store');
@@ -72,3 +77,4 @@ Route::get('/package/create','PackageController@create');
 Route::post('/package/store','PackageController@store');
 Route::get('/package/{id}/edit','PackageController@edit');
 Route::post('/package/{id}/update','PackageController@update');
+Route::get('/package/{id}/remove','PackageController@destroy');

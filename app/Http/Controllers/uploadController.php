@@ -10,12 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class uploadController extends Controller
 {
-    public function index(){
-
-    	return view('upload.uploadForm');
-    	//return Machines::all();
-//    	return request()->input('task');
-  //  	return DB::table('machines')->get();
+    public function index()
+    {
+        $subheader = 'Data Import';
+    	return view('upload.uploadForm',compact('subheader'));
+    	
     }
     public function doUpload(Request $request){
 

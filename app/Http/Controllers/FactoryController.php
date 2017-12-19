@@ -16,8 +16,9 @@ class FactoryController extends Controller
      */
     public function index()
     {
+        $subheader = 'Factory';
         $factories = Factory::where('user_id',Auth::id())->get();
-        return view('factory.index')->with('factories',$factories);
+        return view('factory.index',compact('subheader','factories'));
     }
 
     /**
@@ -27,7 +28,8 @@ class FactoryController extends Controller
      */
     public function create(Request $request)
     {
-        return view('factory.add');
+        $subheader = 'Factory';
+        return view('factory.add',compact('subheader'));
     }
 
     /**
@@ -43,7 +45,7 @@ class FactoryController extends Controller
         $f->name = $request->factoryName;
         $f->description = $request->description;
         $f->save();
-        return redirect('/home');
+        return redirect('/factory');
     }
 
     /**
@@ -98,12 +100,13 @@ class FactoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Factory::destroy($id);
+        return redirect('/factory');
     }
     public function edit($id)
     {
-
+        $subheader = 'Factory';
         $factory = Factory::findOrFail($id);
-        return view('factory.edit')->with('factory',$factory);
+        return view('factory.edit',compact('subheader','factory'));
     }
 }

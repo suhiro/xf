@@ -30,10 +30,11 @@ class MachineController extends Controller
      */
     public function create()
     {
+        $subheader = "Machines";
         $factories = Factory::where('user_id',Auth::id())->get();
         $models = Mod::get();
         $packages = Package::get();
-        return view('machine.create',compact('factories','models','packages'));
+        return view('machine.create',compact('factories','models','packages','subheader'));
     }
 
     /**

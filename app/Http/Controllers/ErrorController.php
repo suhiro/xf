@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Error;
+use App\Component;
 use App\Mod;
 
 class ErrorController extends Controller
@@ -23,9 +24,12 @@ class ErrorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $subheader = "Error Code";
+        $model = Mod::find($id);
+        $components = Component::where('mod_id',$id)->get();
+        return view('model.error.create',compact('model','components','subheader'));
     }
 
     /**
@@ -34,9 +38,15 @@ class ErrorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        //
+        Error::create([
+            'mod_id' => $id,
+            'component_id' => $request->component,
+            'err_code'=> $request->errorCode,
+            'description' => $request->description
+        ]);
+        return redirect('/model/'.$id.'/show');
     }
 
     /**
@@ -58,8 +68,9 @@ class ErrorController extends Controller
      */
     public function edit(Error $error)
     {
+        $subheader = "Error Code";
         $models = Mod::get();
-        return view('model.error.edit',compact('error','models'));
+        return view('model.error.edit',compact('error','models','subheader'));
     }
 
     /**
@@ -87,8 +98,8 @@ class ErrorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $r)
     {
-        //
+        return  Error::destroy($r->error);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <h1>Model Detail</h1>
+<main class="" role="main">
+          <h2>Model Detail</h2>
 
           <h3>{{ $model->name }}</h3>
           <h5>Default Package <strong>{{ $model->package->package }}</strong></h5>
@@ -60,7 +60,7 @@
 </div>
         @endif
 
-        <a class="btn btn-primary" href="/model/error/create" role="button">New Error Code</a>
+        <a class="btn btn-primary" href="/model/{{ $model->id }}/error/create" role="button">New Error Code</a>
 
 </main>
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <h1>Edit Error</h1>
+<main class="" role="main">
+          <h2>Edit Error</h2>
 
 <div class="row">
   <div class="col-lg-8 col-sm-12" >
@@ -73,7 +73,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you absolutely sure to remove this modal? Make sure all machines associated with this model have been taken care of..
+        Are you absolutely sure to remove this Error Code? Make sure all machines associated with this model have been taken care of..
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -82,8 +82,29 @@
     </div>
   </div>
 </div>
+@endsection
 
+@section('pageJS')
+<script>
 
+function deleteError(error){
+  $.post(
+      '/model/error/destroy',
+      {
+        _token: '{{ csrf_token() }}',
+        error: error
+      },
+      function (data,status){
+        if(status == 'success'){
+          window.location.href = '/model/'+ {{ $model->id }} + '/show';
+        }
+      }
+    );
+}
 
-
+  var rmBtn = document.getElementById('removeConfirmBtn');
+  rmBtn.addEventListener('click',function(){
+    deleteError('{{ $error->id }}');
+  },false);
+</script>
 @endsection

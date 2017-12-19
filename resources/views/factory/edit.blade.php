@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+<main class="" role="main">
           <h1>Factory Edit</h1>
 
           <section class="row">
@@ -19,6 +19,7 @@
   </div>
  
   <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="/factory/{{ $factory->id }}/remove" class="btn btn-danger">Remove</a>
 </form>
             </div>
             
