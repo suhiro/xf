@@ -41,8 +41,124 @@
 
         @endif
       </div>
+
+
+      <div class="m-portlet__body" id="machines"></div>
     </div>  
     <!--end::Portlet-->
   </div>
 </div>
+
+
+@endsection
+
+@section('pageJS')
+
+<script>
+  var jString = '{!! $machines !!}';
+  var dataJSONArray = JSON.parse(jString);
+var options = {
+    data: {
+      type:'local',
+      source: dataJSONArray,
+      pageSize: 10
+    },
+    // layout definition
+         layout: {
+            theme: 'default',
+                // datatable theme
+            class: '',
+                // custom wrapper class
+            scroll: false,
+                // enable/disable datatable scroll both horizontal and vertical when needed.
+             height: 450, // datatable's body's fixed height
+            footer: false,// display/hide footer
+            header: true,
+      
+            },
+
+            // column sorting
+        sortable: true,
+        pagination: true,
+
+        
+
+        columns: [
+          {
+            field: "id",
+            title: '#',
+            width: 40,
+            sortable: false,
+            textAlign: 'center',
+            selector: {
+              class: 'm-checkbox--solid m-checkbox--brand',
+            },
+          },
+          {
+            field: "serial",
+            title: "Serial",
+            width: 100,
+            sortable: true,
+            selector: false,
+            taxtAlign: 'center'
+          },
+          {
+            field: "user_serial",
+            title: "User Serial",
+            width: 100,
+            sortable: true,
+            selector: false,
+            taxtAlign: 'center'
+          },
+          {
+            field: "modName",
+            title: "Model",
+            width: 100,
+            sortable: true,
+            selector: false,
+            taxtAlign: 'center'
+          },
+          {
+            field: "currentPackage",
+            title: "Package",
+            width: 100,
+            sortable: true,
+            selector: false,
+            taxtAlign: 'center'
+          },
+          {
+            field: "location",
+            title: "Factory",
+            width: 100,
+            sortable: true,
+            selector: false,
+            taxtAlign: 'center'
+          },
+          {
+            field: "Actions",
+            width: 110,
+            title: "Actions",
+            sortable: false,
+            overflow: 'visible',
+            template : function(row){
+              return '<a class="btn btn-sm btn-primary" href="/machine/' + row.id + '/edit">Edit</a> ';
+            }
+          },
+        ]
+  }
+
+
+  
+  $('#machines').mDatatable(options);
+
+  $('#machines').on('m-datatable--on-check',function(event,args){
+    alert('checked '+ args);
+  });
+   $('#machines').on('m-datatable--on-uncheck',function(event,args){
+    alert('uncheck ' + args );
+  });
+
+
+
+</script>
 @endsection

@@ -17,7 +17,7 @@ class uploadController extends Controller
     	
     }
     public function doUpload(Request $request){
-
+         $subheader = 'Data Import';
     	$original = $request->file('csv_file');
 
     	$data = $this->csvToArray($original);
@@ -27,7 +27,7 @@ class uploadController extends Controller
         $this->insertWorkLogs($workLogs);
 
     	//dd(file_get_contents($original->getRealPath()));
-    	return view('upload.csv',compact('data','workLogs'));
+    	return view('upload.csv',compact('data','workLogs','subheader'));
     }
 
     private function insertEventLogs($data)

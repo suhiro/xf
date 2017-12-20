@@ -15,6 +15,11 @@ class DashboardController extends Controller
     {
         $subheader = 'Overview';
         $machines = Machine::where('user_id',Auth::id())->get();
+        foreach($machines as $m){
+            $m->modName = $m->mod->name;
+            $m->currentPackage = $m->package->package;
+            $m->location = $m->factory->name;
+        }
 
         return view('machine.index',compact('machines','subheader'));
     }

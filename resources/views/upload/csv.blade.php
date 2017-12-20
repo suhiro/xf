@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @section('content')
-<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+<main class="" role="main">
          <h1>Processed CSV file</h1>
 
 <div class="form-group">
 <a href="/upload" class="btn btn-success">Back</a>
 </div>
 
-<table class="table">
+<table class="table table-sm">
 <thead>
 	<tr>
 	<th>MCGS_Time</th>
@@ -31,9 +31,9 @@
 </tr>
 
 @endforeach
-<table>
+</table>
 
-<table class="table">
+<table class="table table-sm">
 <thead>
 	<tr>
 	<th>serial</th>
@@ -55,9 +55,9 @@
 <td>{{$d['workMinutes']}}</td>
 <td>{{$d['output']}}</td>
 </tr>
-
+</table>
 @endforeach
-<table>
+
 
     
         </main>

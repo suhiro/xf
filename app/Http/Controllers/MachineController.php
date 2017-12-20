@@ -19,7 +19,6 @@ class MachineController extends Controller
     public function index()
     {
         $machines = Machine::where('user_id',Auth::id())->get();
-
         return view('machine.index',compact('machines'));
     }
 
