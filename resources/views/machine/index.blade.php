@@ -158,6 +158,30 @@ var options = {
     alert('uncheck ' + args );
   });
 
+function managerAttendanceDetails(e){
+
+  $.post(
+    '/manager/attendance/detail',
+    {
+      _token: '{{ csrf_token() }}',
+      employee: e.target.attributes.manager.value,
+      from: e.target.attributes.from.value,
+      to: e.target.attributes.to.value,
+    },
+    function(data,status){
+      if(status == 'success'){
+        $('#modal-body').html(data);
+        $('#detailModal').modal();
+      }
+    }
+    );
+}
+
+
+$('#m_dashboard_daterangepicker').on('apply.daterangepicker',function(ev,picker){
+ alert('applied: '+ picker.startDate.format("YYYY-MM-DD") + ' '+ picker.endDate.format("YYYY-MM-DD"));
+ // managerAttendance(picker.startDate.format('YYYY-MM-DD'),picker.endDate.format('YYYY-MM-DD'));
+});
 
 
 </script>
