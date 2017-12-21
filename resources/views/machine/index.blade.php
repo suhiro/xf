@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-
+<main id="main">
  <div class="row">
     <div class="col-lg-12">  
       <!--begin::Portlet-->
@@ -15,46 +15,20 @@
           </div>      
         </div>
       </div>
-      <div class="m-portlet__body">
-        @if($machines)
-
-        <table class="table table-sm">
-          <thead>
-            <tr><th>Serial</th><th>user_serial</th><th>Model</th><th>Package</th><th>Factory</th><th>Actions</th></tr>
-          </thead>
-          <tbody>
-            @foreach($machines as $m)
-              <tr>
-                <td>{{ $m->serial }}</td>
-                <td>{{ $m->user_serial }}</td>
-                <td>{{ $m->mod->name }}</td>
-                <td>{{ $m->package->package }}</td>
-                <td>{{ $m->factory->name }}</td>
-                <td><a class="btn btn-sm btn-success" href="/machine/{{$m->id}}/edit">View Detail</a> 
-                  <a class="btn btn-sm btn-primary" href="/machine/{{$m->id}}/edit">Edit</a>
-                </td>
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
-
-
-        @endif
-      </div>
-
 
       <div class="m-portlet__body" id="machines"></div>
     </div>  
     <!--end::Portlet-->
   </div>
 </div>
-
+</main>
 
 @endsection
 
 @section('pageJS')
 
 <script>
+
   var jString = '{!! $machines !!}';
   var dataJSONArray = JSON.parse(jString);
 var options = {
@@ -141,7 +115,10 @@ var options = {
             sortable: false,
             overflow: 'visible',
             template : function(row){
-              return '<a class="btn btn-sm btn-primary" href="/machine/' + row.id + '/edit">Edit</a> ';
+              var buttons = '<button  type="button" class="btn btn-sm btn-primary" onclick="machineReport(' + row.id + ')">Report</button> ';
+              buttons += '<a class="btn btn-sm btn-info singleReportBtn" href="/machine/' + row.id + '/edit">Edit</a> ';
+              
+              return buttons;
             }
           },
         ]
@@ -179,9 +156,32 @@ function managerAttendanceDetails(e){
 
 
 $('#m_dashboard_daterangepicker').on('apply.daterangepicker',function(ev,picker){
- alert('applied: '+ picker.startDate.format("YYYY-MM-DD") + ' '+ picker.endDate.format("YYYY-MM-DD"));
+ //alert('applied: '+ picker.startDate.format("YYYY-MM-DD") + ' '+ picker.endDate.format("YYYY-MM-DD"));
  // managerAttendance(picker.startDate.format('YYYY-MM-DD'),picker.endDate.format('YYYY-MM-DD'));
+  viewDateStart = picker.startDate;
+  viewDateEnd = picker.endDate;
 });
+
+var viewDateStart = moment();
+var viewDateEnd = moment();
+function machineReport(machine){
+  
+
+    $.post(
+      '/machine/'+ machine +'/report',
+      {
+        _token: '{{ csrf_token() }}',
+        start: viewDateStart.format('YYYY-MM-DD'),
+        end: viewDateEnd.format('YYYY-MM-DD'),
+      },
+      function(data,status){
+        if(status == 'success'){
+          $('#main').html(data);
+        }
+      }
+      );
+
+}
 
 
 </script>

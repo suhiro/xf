@@ -10,7 +10,8 @@ Route::get('/log','LogController@log');
 Route::post('/log','LogController@log');
 
 
-
+// machine report
+Route::post('/machine/{id}/report','MachineReportController@machine');
 
 //uploading csv file
 Route::get('/upload/csv','uploadController@index');
