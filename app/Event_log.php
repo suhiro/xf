@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Machine;
+use App\Error;
 
 class Event_log extends Model
 {
@@ -22,9 +23,12 @@ class Event_log extends Model
                 if( in_array($log->ERR_event,$errors) ){
                     if( !isset($result[$log->ERR_event]) )
                         {
-                          $result[$log->ERR_event] = 1; 
+                          $error =  Error::where('err_code',$log->ERR_event)->first();
+                          $result[$log->ERR_event]['count'] = 1;
+                          $result[$log->ERR_event]['description'] = $error->description; 
+                          $result[$log->ERR_event]['component'] = $error->component;
                         } else {
-                        $result[$log->ERR_event] += 1;
+                        $result[$log->ERR_event]['count'] += 1;
                         }
                 }
 

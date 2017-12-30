@@ -2,6 +2,60 @@
 <div class="m-portlet ">
   <div class="m-portlet__body  m-portlet__body--no-padding">
     <div class="row m-row--no-padding m-row--col-separator-xl">
+       <div class="col-md-12 col-lg-6 col-xl-3">
+        <!--begin::Working Time-->
+        <div class="m-widget24">
+          <div class="m-widget24__item">
+                <h4 class="m-widget24__title">
+                    Working Time
+                </h4><br>
+                <span class="m-widget24__desc">
+                    Time in service
+                </span>
+                <span class="m-widget24__stats m--font-danger">
+                    {{ round($stats['time']/60,2) }}
+                </span>   
+                <div class="m--space-10"></div>
+            <div class="progress m-progress--sm">
+              <div class="progress-bar m--bg-danger" role="progressbar" style="width: 69%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <span class="m-widget24__change">
+              Change
+            </span>
+            <span class="m-widget24__number">
+              69%
+                  </span>
+            </div>    
+        </div>
+        <!--end::working time--> 
+      </div>
+        <div class="col-md-12 col-lg-6 col-xl-3">
+        <!--begin::MUBA-->
+        <div class="m-widget24">
+           <div class="m-widget24__item">
+                <h4 class="m-widget24__title">
+                    MUBA
+                </h4><br>
+                <span class="m-widget24__desc">
+                    Mean U B A
+                </span>
+                <span class="m-widget24__stats m--font-success">
+                    {{ $stats['muba'] }}
+                </span>   
+                <div class="m--space-10"></div>
+                <div class="progress m-progress--sm">
+              <div class="progress-bar m--bg-success" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <span class="m-widget24__change">
+              Change
+            </span>
+            <span class="m-widget24__number">
+              90%
+            </span>
+            </div>    
+        </div>
+        <!--end::MUBA--> 
+      </div>
       <div class="col-md-12 col-lg-6 col-xl-3">
         <!--begin::Total Profit-->
         <div class="m-widget24">           
@@ -56,60 +110,8 @@
         </div>
         <!--end::New Feedbacks--> 
       </div>
-      <div class="col-md-12 col-lg-6 col-xl-3">
-        <!--begin::New Orders-->
-        <div class="m-widget24">
-          <div class="m-widget24__item">
-                <h4 class="m-widget24__title">
-                    New Orders
-                </h4><br>
-                <span class="m-widget24__desc">
-                    Fresh Order Amount
-                </span>
-                <span class="m-widget24__stats m--font-danger">
-                    567
-                </span>   
-                <div class="m--space-10"></div>
-            <div class="progress m-progress--sm">
-              <div class="progress-bar m--bg-danger" role="progressbar" style="width: 69%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <span class="m-widget24__change">
-              Change
-            </span>
-            <span class="m-widget24__number">
-              69%
-                  </span>
-            </div>    
-        </div>
-        <!--end::New Orders--> 
-      </div>
-      <div class="col-md-12 col-lg-6 col-xl-3">
-        <!--begin::New Users-->
-        <div class="m-widget24">
-           <div class="m-widget24__item">
-                <h4 class="m-widget24__title">
-                    New Users
-                </h4><br>
-                <span class="m-widget24__desc">
-                    Joined New User
-                </span>
-                <span class="m-widget24__stats m--font-success">
-                    276 
-                </span>   
-                <div class="m--space-10"></div>
-                <div class="progress m-progress--sm">
-              <div class="progress-bar m--bg-success" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <span class="m-widget24__change">
-              Change
-            </span>
-            <span class="m-widget24__number">
-              90%
-            </span>
-            </div>    
-        </div>
-        <!--end::New Users--> 
-      </div>
+     
+    
     </div>
   </div>
 </div>
@@ -133,9 +135,22 @@
       <div class="m-portlet__body" id="machine">
            
            @if(count($logs))
+           <table class="table table-sm">
+            <thead>
+            <tr><th>Date</th><th>setCode</th><th>timeStart</th><th>timeEnd</th><th>Minutes</th></tr>
+            </thead>
+            <tbody>
             @foreach($logs as $log)
-            <p>{{ $log }}</p>
+              <tr>
+            <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$log->timeStart)->toDateString() }}</td>
+            <td>{{ $log->setCode }}</td>
+            <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$log->timeStart)->toTimestring() }}</td>
+            <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$log->timeEnd)->toTimestring() }}</td>
+            <td>{{ $log->workMinutes }}</td>
+              </tr>
             @endforeach
+          </tbody>
+          </table>
            @endif
 
 
@@ -159,8 +174,9 @@
 
       <div class="m-portlet__body" id="machine">
 
+           @if(count($machine->summary))
 
-<!--            @if(count($machine->summary))
+
           <ul class="list-unstyled">
 @php
 $i = 5;
@@ -168,7 +184,7 @@ $i = 5;
 
   @foreach($machine->summary as $key => $val)
     @if($i > 0)
-      <li>{{ $key }} : {{ $val }}</li>
+      <li>{{ isset($val['component']->name)?$val['component']->name:'' }}{{ $key }} ({{ $val['description'] }}) : {{ $val['count'] }}</li>
     @php $i-- @endphp
     @endif  
   @endforeach
@@ -177,7 +193,9 @@ $i = 5;
   <li>more...</li>
   @endif
 </ul>
-           @endif -->
+@else
+<p>No data available</p>
+           @endif
 
 
       </div>

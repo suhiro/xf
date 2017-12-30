@@ -10,7 +10,7 @@
         <div class="m-portlet__head-caption">
           <div class="m-portlet__head-title">
             <h3 class="m-portlet__head-text">
-              Machines <small>under your account</small>
+              Machines <small>under this account</small>
             </h3>
           </div>      
         </div>

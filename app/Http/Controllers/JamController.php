@@ -48,7 +48,9 @@ class JamController extends Controller
      */
     public function show($id)
     {
-        //
+        $machine = Machine::find($id); 
+        $errors = $machine->mod->error->pluck('err_code')->toArray();
+        return $errors;
     }
 
     /**
@@ -59,7 +61,7 @@ class JamController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -96,4 +98,5 @@ class JamController extends Controller
 
         return view('jam/summary',compact('machines'));
     }
+
 }

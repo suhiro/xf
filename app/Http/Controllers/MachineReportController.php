@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Machine;
 use App\Work_log;
 use App\Event_log;
+use App\Log;
 
 class MachineReportController extends Controller
 {
@@ -18,6 +19,9 @@ class MachineReportController extends Controller
                         ->sum('output');
         $stats['assists'] = DB::table('event_logs')->join('errors','event_logs.ERR_event','errors.err_code')->
                     where('serial',$machine->serial)->count();                
+
+        $stats['time'] = Work_log::whereBetween('timeStart',[$r->start,$r->end])->sum('workMinutes');
+        $stats['muba'] = Log::getMUBA($machine->serial,100,$r->start,$r->end);
 
         $errors = $machine->mod->error->pluck('err_code')->toArray();
             
