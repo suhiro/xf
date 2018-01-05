@@ -29,6 +29,20 @@ class Work_log extends Model
       return $max - $min;
     }
 
+    public static function dailyOutput($serial,$startDate,$endDate)
+    {
+      $outputs = array();
+      $outputs[$startDate] = Work_log::where('serial',$serial)->whereDate('timeStart',$startDate)->sum('output');
+      $startDt = Carbon::createFromFormat('Y-m-d',$startDate);
+
+      while($startDt->toDateString() != $endDate)
+      {
+         $outputs[$startDt->toDateString()] = Work_log::where('serial',$serial)->whereDate('timeStart',$startDt->toDateString())->sum('output');
+         $startDt->addDay();
+      }
+      $outputs[$endDate] = Work_log::where('serial',$serial)->whereDate('timeStart',$endDate)->sum('output');
+      return $outputs;
+    }
 
 /*
     $sql = "select * from lot_events where serial='$inSN' AND created_at>='$DateBefore'";

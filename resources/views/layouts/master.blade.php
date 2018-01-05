@@ -32,6 +32,8 @@
     	<!--begin::Base Scripts -->
 		<script src="/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
 		<script src="/assets/demo/demo3/base/scripts.bundle.js" type="text/javascript"></script>
+		<script src="{{ asset('/js/amcharts/amcharts.js') }}"></script>
+		<script src="{{ asset('/js/amcharts/serial.js') }}"></script>
 		<!--end::Base Scripts -->   
         <!--begin::Page Vendors -->
 		<script src="/assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>

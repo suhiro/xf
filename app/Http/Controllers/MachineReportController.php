@@ -28,6 +28,7 @@ class MachineReportController extends Controller
         $events = Event_log::where('serial',$machine->serial)->whereBetween('MCGS_Time',[$r->start,$r->end])->get();
         $machine->summary = Event_log::jamSummary($events,$errors);
 
-    	return view('report.machine.machine',compact('machine','stats','logs'));
+        $outputs = Work_log::dailyOutput($machine->serial,$r->start,$r->end);
+    	return view('report.machine.machine',compact('machine','stats','logs','outputs'));
     }
 }

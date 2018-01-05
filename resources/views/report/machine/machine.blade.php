@@ -117,6 +117,51 @@
 </div>
 <!--end:: Widgets/Stats-->
 
+<div class="row">
+  <div class="col-lg-12">
+     <!--begin::Portlet-->
+      <div class="m-portlet m-portlet--mobile">
+      <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+              Daily Output
+            </h3>
+          </div>      
+        </div>
+      </div>
+
+      <div class="m-portlet__body" id="outputs">
+        <div id="outputChart" style="width:100%; height:400px;"></div>
+        <br>
+           
+           @if(count($outputs))
+           
+          <!--  <table class="table table-sm">
+            <thead>
+            <tr><th>Date</th><th>Output</th></tr>
+            </thead>
+            <tbody>
+            @foreach($outputs as $key => $value)
+              @if($value != 0)
+            <tr>
+              <td>{{ $key }}</td>
+              <td>{{ $value }} </td>
+            </tr>
+              @endif
+            @endforeach
+          </tbody>
+          </table> -->
+           @endif
+
+
+      </div>
+    </div>  
+    <!--end::Portlet-->
+  </div>
+</div>
+
+
 
 <div class="row">
     <div class="col-lg-6">  
@@ -132,7 +177,8 @@
         </div>
       </div>
 
-      <div class="m-portlet__body" id="machine">
+      <div class="m-portlet__body" id="machine_logs">
+        
            
            @if(count($logs))
            <table class="table table-sm">
@@ -172,27 +218,27 @@
         </div>
       </div>
 
-      <div class="m-portlet__body" id="machine">
+      <div class="m-portlet__body" id="machine_jams">
 
            @if(count($machine->summary))
+           <div id="jamChart" style="width:640px; height:400px;"></div>
+           <br>
 
-
-          <ul class="list-unstyled">
-@php
-$i = 5;
-@endphp
-
+<table class="table table-sm">
+  <thead>
+    <tr><th>Error Code</th><th>Count</th><th>Component</th><th>Description</th></tr>
+  </thead>
+  <tbody>
   @foreach($machine->summary as $key => $val)
-    @if($i > 0)
-      <li>{{ isset($val['component']->name)?$val['component']->name:'' }}{{ $key }} ({{ $val['description'] }}) : {{ $val['count'] }}</li>
-    @php $i-- @endphp
-    @endif  
+    <tr>
+    <td>{{ $key }}</td>
+    <td>{{ $val['count'] }}</td>
+    <td>{{ isset($val['component']->name)?$val['component']->name:'' }}</td>
+    <td>{{ $val['description'] }}</td>
+    </tr>
   @endforeach
-
-  @if(sizeof($machine->summary) > 5)
-  <li>more...</li>
-  @endif
-</ul>
+</tbody>
+</table>
 @else
 <p>No data available</p>
            @endif
@@ -203,3 +249,67 @@ $i = 5;
     <!--end::Portlet-->
   </div>
 </div>
+
+<script>
+
+
+
+var jamData = [
+  @foreach($machine->summary as $key => $value)
+    {
+      'jamCode': '{{ $key }}',
+      'occurence': {{ $value['count'] }},
+      'component': '{{ isset($val['component']->name)?$val['component']->name:'' }}',
+      'description' : '{{ $value['description'] }}',
+    },
+  @endforeach
+]; 
+
+ AmCharts.makeChart( "jamChart", {
+  "type": "serial",
+  "dataProvider": jamData,
+  "categoryField": "jamCode",
+  "graphs": [ {
+    "valueField": "occurence",
+    "type": "column",
+    "fillAlphas": 0.8,
+    "balloonText": "[[category]]:[[description]]<br>Count: <strong>[[value]]</strong>",
+  } ],
+  "categoryAxis": {
+    "autoGridCount": false,
+    "GridCount": jamData.length,
+    "gridPosition": "start"
+  }
+} );
+
+
+var outputData = [
+
+  @foreach($outputs as $key => $value)
+    {
+            'date': '{{ $key }}',
+            'output': '{{ $value }}'
+    },
+  @endforeach
+
+];
+ AmCharts.makeChart( "outputChart", {
+  "type": "serial",
+  "dataProvider": outputData,
+  "categoryField": "date",
+  "graphs": [ {
+    "valueField": "output",
+    "type": "line",
+    "fillAlphas": 0,
+    "bullet":"round",
+
+    "balloonText":"[[category]]: <strong>[[value]]</strong>"
+  } ],
+  "categoryAxis": {
+    "autoGridCount": false,
+    "GridCount": outputData.length,
+    "gridPosition": "start"
+  }
+} );
+
+</script>
