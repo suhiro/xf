@@ -21,8 +21,13 @@ class MachineReportController extends Controller
                     where('serial',$machine->serial)->count();                
 
         $stats['time'] = Work_log::whereBetween('timeStart',[$r->start,$r->end])->sum('workMinutes');
-        $stats['muba'] = Log::getMUBA($machine->serial,100,$r->start,$r->end);
-
+       $stats['muba'] = Log::getMUBA($machine->serial,100,$r->start,$r->end);
+        // if($stats['assists'] == 0) {
+        //     $stats['muba'] = 0;
+        // } else {
+        //     $stats['muba'] = $status['output'] / $stats['assists'];
+        // }
+        
         $errors = $machine->mod->error->pluck('err_code')->toArray();
             
         $events = Event_log::where('serial',$machine->serial)->whereBetween('MCGS_Time',[$r->start,$r->end])->get();

@@ -40,7 +40,7 @@
                     Mean U B A
                 </span>
                 <span class="m-widget24__stats m--font-success">
-                    {{ $stats['muba'] }}
+                    {{ round($stats['output']/$stats['assists'],2) }}
                 </span>   
                 <div class="m--space-10"></div>
                 <div class="progress m-progress--sm">
