@@ -10,7 +10,7 @@
                     Working Time
                 </h4><br>
                 <span class="m-widget24__desc">
-                    Time in service
+                    Service hours
                 </span>
                 <span class="m-widget24__stats m--font-danger">
                     {{ round($stats['time']/60,2) }}
