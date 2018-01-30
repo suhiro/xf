@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Machine;
 
 class Log extends Model
 {
@@ -57,7 +58,7 @@ class Log extends Model
                     where('serial',$serial)->
                     whereDate('event_logs.MCGS_Time',$date)->first();
         
-          $assists = self::assistCodes($serial,$date);
+          $assists = self::assistCodes($serial);
         
           $totalErrors = 0;
           $debugArray = array();
@@ -91,12 +92,14 @@ class Log extends Model
 
     }
 
-    public static function assistCodes($serial,$date)
+    public static function assistCodes($serial)
     {
-      return DB::table('event_logs')->join('errors','event_logs.ERR_event','errors.err_code')->
-                    select('ERR_event','output')->
-                    where('serial',$serial)->
-                    whereDate('event_logs.MCGS_Time',$date)->get();
+      // return DB::table('event_logs')->join('errors','event_logs.ERR_event','errors.err_code')->
+      //               select('ERR_event','output')->
+      //               where('serial',$serial)->
+      //               whereDate('event_logs.MCGS_Time',$date)->get();
+      $machine = Machine::where('serial',$serial)->first();
+      return $machine->mod->error->pluck('err_code');
     }
 
 
