@@ -15,7 +15,12 @@ class Log extends Model
       
       $event_logs = Event_log::where('serial',$serial)->whereBetween('MCGS_Time',[$from,$to])->get(); // All logs for the given machine for the given period
       $validAssists = self::assistCodes($serial); // all valid for the machine model, identified by machine serial id
+
+      
       $filteredLogs = $event_logs->whereIn('ERR_event',$validAssists); // all logs with only valid assist errors
+
+
+
       $result = collect(); // collcection holding all result data
       $intervals = collect(); // collection form holding all output intevals
       
